@@ -326,6 +326,7 @@ contributions to this repository:
   grateful.
 - Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being “test
   users” and providing their invaluable feedback on this guide.
-- My deepest gratitude to Dr. Daniel Weeks for … everything. If it
-  weren’t for his guidance and inspiration, I would never have ventured
-  into the mystifying world of Bayesian statistics.
+- My deepest gratitude to Dr. Daniel Weeks. Without his guidance and
+  inspiration, I would never have ventured into the world of Bayesian
+  statistics, or pursued many other endeavors I once thought were beyond
+  my capabilities.
