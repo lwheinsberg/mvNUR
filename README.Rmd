@@ -29,7 +29,7 @@ This repository was created to support a presentation at the International Socie
 
 Heinsberg LW. Multivariate Bayesian Approaches for Analyzing Correlated Phenotypes in Nursing Research. (Expert Lecturer Abstract, Podium). Presented at the International Society of Nurses in Genetics, November 2023, Providence, Rhode Island.
 
-which has been adapted for (hopeful) publication as a manuscript entitled: 
+which has been adapted for (hopeful) publication as a manuscript entitled:   
 
 Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE. A Guide to Multivariate Bayesian Analyses in Nursing Research. In preparation for submission to Biological Research for Nursing. 
 
