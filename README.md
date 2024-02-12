@@ -130,7 +130,7 @@ brief introduction.
     [`BIMBAM_multi_pheno_MAC_M1_modified.zip`](BIMBAM_multi_pheno_MAC_M1_modified.zip)
     or
     [`BIMBAM_multi_pheno_MAC_Intel_modified.zip`](BIMBAM_multi_pheno_MAC_Intel_modified.zip)from
-    this repository. For former is for newer Apple silicon/M1 macs and
+    this repository. The former is for newer Apple silicon/M1 macs and
     the latter is for older macs. If you are not sure which Mac you
     have, you can click on the apple symbol in the upper left corner of
     your machine. If you have an Apple silicon, the Chip will be listed
