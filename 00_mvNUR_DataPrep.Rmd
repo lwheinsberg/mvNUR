@@ -24,16 +24,16 @@ require(knitr)
 
 # Copyright
 
-Copyright 2023, University of Pittsburgh. All Rights Reserved.        
+Copyright 2023, University of Pittsburgh. All Rights Reserved.\
 License: [GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # Overview
 
-A fully synthetic example data set has been created to accompany this repository so that we can freely and safely share it without restriction on GitHub in order to document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants. 
+A fully synthetic example data set has been created to accompany this repository so that we can freely and safely share it without restriction on GitHub in order to document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants.
 
 # Load libraries
 
-Load the libraries needed to run the code. 
+Load the libraries needed to run the code.
 
 ```{r load_libraries2, message=FALSE, warning=FALSE}
 library(tidyverse) ## Data wrangling 
@@ -46,13 +46,13 @@ library(preprocessCore) ## Preprocessing functions
 library(corrplot) ## Visualize correlation matrix
 ```
 
-# Prepare data for multiariate analyses
+# Prepare data for multivariate analyses
 
 The programs we will use for multivariate analyses (bnlearn and mvBIMBAM) require the data to be in a specific format for analysis. In this markdown, we are preparing and formatting the data for analysis.
 
-## Read in the synthetic data set 
+## Read in the synthetic data set
 
-Please see the README.md for information regarding the example synthetic data set. 
+Please see the README.md for information regarding the example synthetic data set.
 
 ```{r load_data}
 # Read in the synthetic data set created for use with this example analysis code
@@ -83,7 +83,7 @@ df_vertex_table <- data.frame(
 )
 ```
 
-Check that all variables are numeric or integer. 
+Check that all variables are numeric or integer.
 
 ```{r}
 rs_columns <- grep("^rs", names(df_synth), value = TRUE)
@@ -95,7 +95,7 @@ if (length(non_numeric_rs_columns) > 0) {
 }
 ```
 
-In brief, the data set focuses on 6 symptoms (`r traits`) and 6 candidate variants of interest (`r genes`) and contains `r n` participants. 
+In brief, the data set focuses on 6 symptoms (`r traits`) and 6 candidate variants of interest (`r genes`) and contains `r n` participants.
 
 ```{r}
 # Read in a mapping of variable name to informative label
@@ -129,7 +129,7 @@ cor_matrix <- cor(subset_df, use = "complete.obs")
 corrplot(cor_matrix, method = "circle", type = "lower", tl.col = "black", tl.srt = 45)
 ```
 
-## Summarize missing data 
+## Summarize missing data
 
 ```{r}
 missing_data_table <- df_synth %>%
@@ -143,9 +143,9 @@ pander(missing_data_table)
 
 First, let's prepare our data sets. Currently, the software we are using does not allow missing data for multivariate phenotype analysis, so select complete cases only. We will also set up a few data frames in preparation to regress out variation related to our covariates of interest (in this example, age and race).
 
-(1) `df_i1_regress`: contains all variables of interest ordered and filtered for complete cases                  
-(2) `df_i1`: contains all variables except the covariates that will be regressed out below (in this example, age and race)       
-(3) `df_synth`: Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM                 
+(1) `df_i1_regress`: contains all variables of interest ordered and filtered for complete cases\
+(2) `df_i1`: contains all variables except the covariates that will be regressed out below (in this example, age and race)\
+(3) `df_synth`: Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM
 
 ```{r prep}
 # The first data frame (df_i1_regress) contains all variables of interest ordered 
@@ -182,13 +182,13 @@ Y <- as.matrix(df_i1 %>% select(all_of(traits)))
 head(Y)
 ```
 
-There are `r n` participants with complete data that we will retain for our analyses. 
+There are `r n` participants with complete data that we will retain for our analyses.
 
-## Normalize and adjust data for covariates 
+## Normalize and adjust data for covariates
 
-In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the `f_quatile_norm_resid()` function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are order quantile-normalized. 
+In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the `f_quatile_norm_resid()` function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are order quantile-normalized.
 
-### Create adjustment/normalization functions 
+### Create adjustment/normalization functions
 
 We now create a function to perform residual adjustment for covariates (in this example, we are adjusting for age and race):
 
@@ -199,7 +199,7 @@ f_quantile_norm_resid <- function(Y, df) {
 }
 ```
 
-If adapting this code above for your own work, edit the `x ~ age + race` regression formula to adjust for covariates of interest, replacing `age` and `race` with your covariate variable names. 
+If adapting this code above for your own work, edit the `x ~ age + race` regression formula to adjust for covariates of interest, replacing `age` and `race` with your covariate variable names.
 
 We now create function to 'super quantile normalize' the data:
 
@@ -231,18 +231,18 @@ head(qn_resid_Y)
 
 Note: For one test user (DM), the above chunk threw the error:
 
-```
+```         
 Error in normalize.quantiles(Y) : 
 ERROR; return code from pthread_create() is 22
 ```
 
-This issue was resolved by updating Rstudio to the latest version. 
+This issue was resolved by updating Rstudio to the latest version.
 
-## Remove outliers 
+## Remove outliers
 
-Observations in violation of multivariate normality at an alpha=0.01 level based on Mahalanobis distance-based test statistics are now removed to avoid spurious conclusions.  
+Observations in violation of multivariate normality at an alpha=0.01 level based on Mahalanobis distance-based test statistics are now removed to avoid spurious conclusions.
 
-### Write a function to calculate Mahalanobis distance 
+### Write a function to calculate Mahalanobis distance
 
 ```{r outliers_function}
 # Create a function to calculate Mahalanobis distance
@@ -260,7 +260,7 @@ getMD <- function(x) {
 i_keep <- which(pchisq(getMD(qn_resid_Y_b), df = dim(Y)[2]) > 0.01)
 ```
 
-## Create a summary 
+## Create a summary
 
 ```{r sample_summary}
 # Record sample sizes in a summary table
@@ -288,7 +288,7 @@ pander(table1,caption="Sample sizes")
 
 ## Prepare and save final files
 
-### Data used in both programs 
+### Data used in both programs
 
 ```{r}
 # Check for data directory; if not present, create it 

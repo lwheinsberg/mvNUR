@@ -44,7 +44,7 @@ library(preprocessCore) ## Preprocessing functions
 library(corrplot) ## Visualize correlation matrix
 ```
 
-# Prepare data for multiariate analyses
+# Prepare data for multivariate analyses
 
 The programs we will use for multivariate analyses (bnlearn and
 mvBIMBAM) require the data to be in a specific format for analysis. In
@@ -536,7 +536,7 @@ sessionInfo()
 
     ## R version 4.2.1 (2022-06-23)
     ## Platform: aarch64-apple-darwin20 (64-bit)
-    ## Running under: macOS Ventura 13.4
+    ## Running under: macOS 14.3.1
     ## 
     ## Matrix products: default
     ## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
