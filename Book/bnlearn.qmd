@@ -1,0 +1,188 @@
+# bnlearn
+
+## Overview
+
+This code was adapted from previous work led by Jerry Zhang, Lacey Heinsberg, and Daniel Weeks:
+
+Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: https://doi.org/10.1002/gepi.22508. PMID: 36352773; PMCID: PMC9892232.
+
+[GitHub Repository](https://github.com/lwheinsberg/mvCREBRF)
+
+which was created/adapted from:
+
+Scutari M, Howell P, Balding DJ, Mackay I. Multiple Quantitative Trait Analysis Using Bayesian Networks. Genetics. Genetics; 2014 Apr 11;198(1):129--137. PMID: 25236454 PMCID: PMC4174925 DOI: https://doi.org/10.1534/genetics.114.165704
+
+NOTE: Some of the functions were copied from the bnlearn example at [Link](http://www.bnlearn.com/research/genetics14/) as allowed under the Creative Commons Attribution-Share Alike License.
+
+### bnlearn
+
+The R package `bnlearn` is helpful for learning the graphical structure of Bayesian networks, estimating their parameters, and performing some useful inference. Installation instructions can be found in the README file.
+
+## Load Libraries
+
+```{r load_libraries1,message=FALSE}
+library(tidyverse) 
+library(lme4)      
+library(bnlearn)  
+library(parallel)  
+# The 'graph' package is a Bioconductor package
+# One of our tutorial test users had trouble installing graph and Rgraphviz packages and had to force install as shown below
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("graph", force = TRUE)
+library(graph)     
+library(pander)   
+library(ggnetwork)
+# The 'Rgraphviz' is a Bioconductor packaage
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("Rgraphviz", force = TRUE)
+library(Rgraphviz)  
+```
+
+## Read in the synthetic dataset
+
+As detailed in created in the [data preparation](./prep.qmd) section, the synthetic phenotype data created for this example were adjusted for age and sex, quantile normalized, and outliers were removed. The quantile normalized adjusted data set is read in below. Please see the [introduction](#0) section for more details about the data set and variables.
+
+```{r load-data}
+df <- readRDS("data/QuantNorm.rds") ###CUSTOMIZE** (if input file name was changed in 00_ workflow)
+```
+
+Read in traits/gene names created there as well.
+
+```{r}
+load("./data/TraitsGenes.RData") ###CUSTOMIZE** (if input file name was changed in 00_ workflow)
+```
+
+Alternatively, store this information manually as shown below.
+
+```         
+# Define the phenotypes of interest
+traits <- c("EMO_tscore", "bdito", "FAT_tscore", "paohcif", "EPSscore", "pain") ###CUSTOMIZE**
+trait_mapping <- c("Anxiety", "Depression", "Fatigue", "Cognitive function", "Sleepiness", "Pain") ###CUSTOMIZE**
+custom_labels <- setNames(trait_mapping, traits)
+# Create expanded custom labels 
+custom_labels2 <- c(custom_labels, setNames(genes, genes))
+
+# Define variants of interest 
+genes <- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs7522705") ###CUSTOMIZE**
+```
+
+## Bayesian Network estimation
+
+### Load functions
+
+For simplicity, all bnlearn analysis and plotting functions are stored in see [`bnlearn_functions.R`](https://github.com/lwheinsberg/mvNUR/blob/main/bnlearn_functions.R) in the GitHub repository. See that file for details.
+
+```{r}
+source("./bnlearn_functions.R")
+```
+
+### Apply functions and visualize results
+
+#### Data summaries
+
+```{r summary}
+# Check dimensions of the synthetic data used here 
+dim(df)
+# Summary of data
+summary(df)
+# Correlation structure of data
+cor(df[,traits])
+# View list of traits/SNPs of interest
+traits
+genes
+```
+
+#### Regular graph
+
+The `run_plot_graph` function calls the `fit.the.model()` and `xval.the.model()` functions to learn and visualize the Bayesian networks in the data. This function also customizes node labels and appearance, and then returns results related to the network analysis. Note that the following function uses parallel computing which involves breaking down a complex task into smaller subtasks that can be executed simultaneously, or in parallel, by multiple processors or computers to speed up computationally intense calculations.
+
+The `fit.the.model()` function constructs the Bayesian network model by employing a constrained learning algorithm based on conditional independence testing, specifically the semi-interleaved HITON-PC method. In this process, the algorithm identifies "parent-child" relationships within the network, where nodes represent either phenotypic traits or genetic variants, and edges signify associations between these nodes. Notably, traits can have parent nodes that are either genetic variants or other traits, but they can only serve as parents to other traits, adhering to the constraint that genetic variants do not act on traits (since genotypes are constant across an individual's lifespan).
+
+To enforce this constraint, a "blacklist" is created using the `tiers2blacklist()` function, preventing arcs from being directed towards specific nodes. This restriction aims to guide the learning process by ensuring that known causal relationships are inferred in the correct direction from genetic variants to traits, while also allowing for customization to blacklist other traits if needed (e.g., you can customize this to force/restrict a trait-\>trait relationship).
+
+After the networks are learned, the nodes are categorized into subsets for visualization, and the network structures are determined by maximizing the Bayesian Information Criteria (BIC). This approach facilitates the construction of Bayesian networks that capture probabilistic relationships between traits and genetic variants, with the learned structures reflecting potential causal associations.
+
+Further details on the methodology can be found at http://www.bnlearn.com/research/genetics14/.
+
+The `xval.the.model()` function performs model training with n-fold cross-validation (in the case of this example, 5-fold cross-validation).
+
+During this process, the data set is divided into multiple partitions, with each partition serving as the test set while the remaining data is used for training. This process is repeated iteratively to ensure that all data points are included in the test set at least once.
+
+During each fold of cross-validation, the following steps are performed:
+
+(A) Data Splitting: The dataset is divided into a training set (dtraining) and a test set (dtest).
+(B) Model Fitting: A Bayesian network model is fitted to the training data using the `fit.the.model()` function. This model captures the probabilistic relationships between phenotypic traits and genetic variants.
+(C) Prediction: The model is used to predict the values of phenotypic traits on the test set. These predictions are stored in the prediction matrix.
+(D) Posterior Estimation: Posterior estimates are computed for each trait based on the test data. These estimates are stored in the post matrix.
+(E) Correlation Computation: The correlations between the predicted and observed values for each trait are calculated, both before (predcor) and after (postcor) cross-validation. These correlations provide a measure of the model's predictive performance.
+(F) Ridge Regression (Optional): If the ridge parameter is set to true, ridge regression is applied to certain nodes of the Bayesian network model to improve model performance.
+
+Finally, the function returns various results, including the predicted values, posterior estimates, observed values, and correlation coefficients for each trait. Additionally, it provides the learned models for each fold of cross-validation. This process allows for the assessment of how well the Bayesian network model generalizes to unseen data and provides insights into its predictive capabilities.
+
+Here, we will call the above functions and plot the base graph showing only the directions of association but not the strengths.
+
+```{r RunPlotGraph, fig.width=8, fig.height=8, warning=FALSE}
+set.seed(6)
+results <- run_plot_graph(data = df, k_crossval = 5, k_iterations = 5, alpha = 0.1, ncluster = 8, custom_labels = custom_labels2) 
+```
+
+#### Labeled high-strength graph
+
+Here we redraw the graph adding strengths/directions to the association lines.
+
+The strength and directionalities of the edges of the Bayesian networks are inferred through an iterative process so resulting networks vary a bit from run to run. As such, representative networks (i.e., averaged) are plotted.
+
+The code below calls in the function created above to add specific details on the strength (Es) and direction (Ed) of each edge that summarize the results across the total number of iterations.
+
+Edge strength is a measure of confidence of that edge while fixing the rest of the network structure and is defined as the empirical frequency a specific edge is observed over a set of networks learned from iterations (i.e., the number of times the edge was present out of the total number of iterations).
+
+Edge direction represents the probability of the edge's direction conditional on the edge's presence within the network (i.e., the number of times the edge traveled in a specific direction out of the total number of iterations in which it was present).
+
+An edge is included in the network graph if its strength is larger than a significance threshold learned from the iterative samples.
+
+```{r high-strength, fig.width=8, fig.height=8}
+# Redraw graph adding strengths/directions to association lines using function created above 
+# Here, we use a threshold of 0.9 to indicate "strong" associations
+# In this case, edges with a strength >0.9 will be solid, while edges with a strength <0.9 will be dashed
+set.seed(6)
+redraw.graph.labels(
+  results$averaged2,
+  results$strength2,
+  results$averaged,
+  results$traits,
+  custom.threshold = 0.90
+)
+```
+
+Here we can visualize the strengths and directions as a table.
+
+```{r strength_table}
+# Visualize strengths/directions as a table 
+results$strength2 %>%
+ filter(strength > 0 & direction > 0 & strength > results$threshold) %>%
+  arrange(strength) %>% pander()
+```
+
+#### ggnetwork graph
+
+Finally, we redraw the graph again. This time, we are changing the colors, line types, and using `ggrepel` so that node and edge labels do not overlap.
+
+```{r redraw_bw, fig.width=8, fig.height=8, message=F, warning=F}
+# Redraw graph in black and white using ggnetwork through the function created above 
+set.seed(6)
+redraw.label.ggnet(results$averaged2,
+                   results$strength2,
+                   results$averaged,
+                   results$traits, 
+                   df_vertex_table = df_vertex_table)
+```
+
+Interpretation: Given the complexity of this plot, let's focus on breaking apart a few results for a single variant, rs5746136. In this example figure, we see direct associations (solid arrows pointing away from the variant) between the rs5746136 with sleepiness and fatigue, and a weaker direct association (dashed line pointing away from the variant) with cognitive function. We also observe an indirect association between rs5746136 and cognitive function through fatigue which can be interpreted as cognitive function being conditionally independent of rs5746136 given the presence of fatigue.
+
+In this figure, the strengths (Es) and directions (Ed) of the relationships are also depicted along the edges (Es:Ed). As described above, the strength is a measure of confidence of that edge while fixing the rest of the network structure and is defined as the empirical frequency a specific edge is observed over a set of networks learned from iterations (i.e., the number of times the edge was present out of the total number of iterations). Edge direction represents the probability of the edge's direction conditional on the edge's presence within the network (i.e., the number of times the edge traveled in a specific direction out of the total number of iterations in which it was present). So in the example figure, we see an association between rs5746136 and fatigue with Es:Ed values of 1:1. This means that the edge was present in 100% of all iterations and the relationship traveled from the rs5746136 variant ("parent") to fatigue ("child") 100% of the time. Note that in our "blacklist" code above, we specified that all variants could only be a "parent" and not a "child" -- so directions of 1 facing away from variants to symptoms are expected. This is not the case with the arrow traveling from cognitive function to pain. With Es:Ed values of 0.88:0.91, this relationship was observed in 88% of iterations but traveled in the shown direction in only 91% of realizations. Finally, note that edges with a strength \>0.9 are solid, while edges with a strength \<0.9 are dashed.
+
+## Conclusion
+
+And with that, we conclude our `bnlearn` tutorial! We hope that this code is documented in enough detail so that you can easily adapt it for your own projects, but feel free to reach out with any questions! Please see the [mvBIMBAM](/.mvbimbam.qmd) chapter for the mvBIMBAM tutorial!

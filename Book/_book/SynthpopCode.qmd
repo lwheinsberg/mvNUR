@@ -1,0 +1,107 @@
+---
+title: "Code to Create the Synthetic Data Set"
+author: "Lacey W. Heinsberg"
+output:
+  github_document:
+  html_preview: false
+  toc: true
+  pdf_document:
+    toc: yes
+    number_sections: true
+    toc_depth: '5'
+  html_document:
+    df_print: paged
+    toc: yes
+    number_sections: true
+    toc_depth: '5'
+header-includes: 
+  - \renewcommand{\and}{\\}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  #fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Copyright information 
+
+Copyright 2024, University of Pittsburgh. All Rights Reserved.
+License: [GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
+# Load Libraries
+
+```{r load_libraries,message=FALSE}
+library(tidyverse)
+library(dplyr)
+library(synthpop)
+```
+
+# Load real data
+
+```{r}
+df <- read.csv("RealData.csv")
+```
+
+Anxiety = EMO_tscore (1450EMO)               
+Depression = bdito (502BDI)               
+Fatigue = FAT_tscore (1451FAT)               
+Cognitive function = paohcif (305PAO)               
+Daytime sleepiness = EPSscore (1868EPS)               
+Pain = brf005 (227BRF)               
+
+# Create synthetic data set 
+
+## Clean data 
+
+```{r}
+codebook.syn(df)
+```
+
+Some general tips to follow when synthesizing data:
+
+(1) Remove any identifiers (e.g., study number).           
+(2) Change any character (text) variables into factors and rerun codebook.syn() after this. The syn() function will do this conversion for you but it is better that you do it first.                
+(3) Note which variables have missing values, especially those that are not coded as the R missing value NA. For example, the value -9 often signifies missing data for positive items like income. These can be identified to the syn() function via the cont.na parameter.    
+(4) Note any variables that ought to be derivable from others (e.g., discharge date from length-of-stay and admission date). These could be omitted and recalculated after synthesis or calculated as part of the synthesis process by setting their method to passive (see ?syn.passive).       
+(5) Note any variables that should obey rules that depend on other variables. For example, the number of cigarettes smoked should be zero or missing for non-smokers. You can set the rules with the parameters rules and rvalues of the syn() function. The syn() function will warn you if the rule is not obeyed in the observed data.         
+
+Only (3) is relevant to this project/data set as -1 = missing       
+
+```{r}
+df <- df %>% mutate(across(everything(), ~ifelse(. == -1, NA, .)))
+```
+
+## Create synthetic data set 
+
+Note that you can adjust k to simulate a larger data set of k participants. I originally used that approach for this guide, but all signals were lost from the data. Since I want to amplify any preliminary signals seen in the original data set, I ultimately ended up using bind_rows() separately to append copy after copy (not shown) of the original synthetic data created below. 
+
+```{r}
+#df.syn <- syn(df, k=1000) 
+df.syn <- syn(df)
+```
+
+```{r}
+summary(df.syn)
+```
+
+## Compare data sets 
+
+```{r}
+compare(df.syn, df)
+```
+
+## Write new data 
+
+```{r}
+write.syn(df.syn, filename="BrCa_synthetic", filetype=c("csv"))
+```
+
+# Session Information
+
+```{r}
+sessionInfo()
+```
