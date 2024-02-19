@@ -239,18 +239,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1.1</span> Overview</h2>
-<p>This guide will focus on the application of two multivariate Bayesian software programs: (1) <code>bnlearn</code> and (2) <code>mvBIMBAM</code>.</p>
-<p><strong>Approach 1:</strong> <code>bnlearn</code> - bnlearn is an R package for learning the graphical structure of Bayesian networks,estimating their parameters, and performing some useful inference as described in:</p>
+<p>This tutorial will focus on the application of two multivariate Bayesian software programs: (1) <code>bnlearn</code> and (2) <code>mvBIMBAM</code>.</p>
+<p><strong>Approach 1:</strong> <code>bnlearn</code> - bnlearn is an R package for learning the graphical structure of Bayesian networks, estimating their parameters, and performing some useful inference as described in:</p>
 <p>Scutari M, Howell P, Balding DJ, Mackay I. Multiple Quantitative Trait Analysis Using Bayesian Networks. Genetics. 2014 Apr 11;198(1):129–137. PMID: 25236454 PMCID: PMC4174925 DOI: https://doi.org/10.1534/genetics.114.165704</p>
 <p>and at:</p>
 <p><a href="https://www.bnlearn.com/">www.bnlearn.com</a></p>
-<p>Additional details about the method and its interpretation can be found in the <a href="./bnlearn.html">bnlearn chapter</a> of this book (or <code>01_mvNUR_bnlearn.Rmd</code> in the <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>).</p>
+<p>Additional details about the method and its interpretation can be found in the <a href="./bnlearn.html">bnlearn chapter</a> of this book or <code>01_mvNUR_bnlearn.Rmd</code> in the <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>.</p>
 <p><strong>Approach 2:</strong> <code>mvBIMBAM</code> - mvBIMBAM implements a terminal-based Bayesian approach for genetic association analysis of multiple related phenotypes, as described in:</p>
 <p>Shim H, Chasman DI, Smith JD, Mora S, Ridker PM, Nickerson DA, Krauss RM, Stephens M. A multivariate genome-wide association analysis of 10 LDL subfractions, and their response to statin treatment, in 1868 Caucasians. PLoS One. 2015 Apr 21;10(4):e0120758. doi: https://doi.org/10.1371/journal.pone.0120758. PMID: 25898129; PMCID: PMC4405269.</p>
 <p>Stephens M. A unified framework for association analysis with multiple related phenotypes. PLoS One. 2013 Jul 5;8(7):e65245. doi: https://doi.org/10.1371/journal.pone.0065245. Erratum in: PLoS One. 2019 Mar 19;14(3):e0213951. PMID: 23861737; PMCID: PMC3702528.</p>
-<p>Additional details about the method and its interpretation can be found in the <a href="./mvbimbam.html">mvBIMBAM chapter</a> of this book (or in <code>02_mvNUR_mvBIMBAM.Rmd</code> in the <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>).</p>
-<p>Throughout all markdowns, we have flagged lines that will need to be modified by the user if adapting this code for your own data using <code>###CUSTOMIZE**</code> annotation.</p>
-<p>Also note that while <code>bnlearn</code> is run directly in R, <code>mvBIMBAM</code> is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix. Some great introductory R/Unix resources are listed at the end of this document.</p>
+<p>Additional details about the method and its interpretation can be found in the <a href="./mvbimbam.html">mvBIMBAM chapter</a> of this book or in <code>02_mvNUR_mvBIMBAM.Rmd</code> in the <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>.</p>
+<p>Note that while <code>bnlearn</code> is run directly in R, <code>mvBIMBAM</code> is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix. Some great introductory R/Unix resources are listed at the end of this document.</p>
+<p>Finally, note that, throughout all markdowns, we have flagged lines that will need to be modified by the user if adapting this code for your own data using <code>###CUSTOMIZE**</code> annotation.</p>
 </section>
 <section id="installation" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="installation"><span class="header-section-number">1.2</span> Installation</h2>
@@ -264,22 +264,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="mvbimbam" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">1.2.2</span> mvBIMBAM</h3>
-<p>mvBIMBAM is designed to be installed from <a href="https://github.com/heejungshim/mvBIMBAM">GitHub</a>. The binary executable file for Linux is in the <code>https://github.com/heejungshim/mvBIMBAM/bin/</code> directory while a zip file of the binary executable file, source code, and example input files for Mac is in <code>https://github.com/heejungshim/mvBIMBAM/forMAC</code> directory. NOTE: The software executable is called ‘bimbam’, but we refer to the program as ‘mvBIMBAM’ throughout.</p>
+<p>mvBIMBAM is designed to be installed from the <a href="https://github.com/heejungshim/mvBIMBAM">mvBIMBAM GitHub respository</a>. The binary executable file for Linux is in the <code>https://github.com/heejungshim/mvBIMBAM/bin/</code> directory while a zip file of the binary executable file, source code, and example input files for Mac is in <code>https://github.com/heejungshim/mvBIMBAM/forMAC</code> directory. NOTE: The software executable is called ‘bimbam’, but we refer to the program as ‘mvBIMBAM’ throughout.</p>
 <p>HOWEVER, when developing/testing this tutorial, several of us ran into installation issues for Mac. Ultimately, we had to modify the program’s makefile to support installation. We have alerted the mvBIMABM software maintainer of this issue, but have not seen it resolved. As such, we provide a modified Mac download to make this process easier for users of this tutorial (allowable under GNU General Public License (GPLv3+)).</p>
-<p>To install mvBIMBAM, please follow the instructions below, which were written with the assumption that users have an introductory understanding of navigating your computer using the terminal/Unix commands. If you are new to Unix navigation via the terminal, please visit this <a href="https://macpaw.com/how-to/use-terminal-on-mac">link</a> for a brief introduction.</p>
+<p>To install mvBIMBAM, please follow the instructions below, which were written with the assumption that users have an introductory understanding of navigating a computer using the terminal/Unix commands. If new to Unix navigation via the terminal, please visit this <a href="https://macpaw.com/how-to/use-terminal-on-mac">how to guide</a> for a brief introduction.</p>
 <section id="mac" class="level4" data-number="1.2.2.1">
 <h4 data-number="1.2.2.1" class="anchored" data-anchor-id="mac"><span class="header-section-number">1.2.2.1</span> Mac</h4>
 <ol type="1">
 <li><p>Download <a href="https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_M1_modified.zip"><code>BIMBAM_multi_pheno_MAC_M1_modified.zip</code></a> or <a href="https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_Intel_modified.zip"><code>BIMBAM_multi_pheno_MAC_Intel_modified.zip</code></a> from our <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>. The former is for newer Apple silicon/M1 macs and the latter is for older macs. If you are not sure which Mac you have, you can click on the apple symbol in the upper left corner of your machine. If you have an Apple silicon, the Chip will be listed as Apple M1 or M2. If you have the Apple Intel, you will see the processor listed as Intel Core i5, i7, or similar.</p></li>
 <li><p>Unzip the file by double clicking the zipped folder.</p></li>
-<li><p>Using the terminal, navigate to the newly unzipped mvBIMBAM folder</p></li>
+<li><p>Using the terminal, navigate to the newly unzipped mvBIMBAM folder. For example:</p></li>
 </ol>
 <pre><code>cd Desktop/BIMBAM_multi_pheno_MAC_M1_modified
 pwd </code></pre>
 <p>or</p>
 <pre><code>cd Desktop/BIMBAM_multi_pheno_MAC_Intel_modified
 pwd </code></pre>
-<p>For example, on my machine, when I use the <code>pwd</code> command (print working directory), my folder is located at: /Users/username/Desktop/BIMBAM_multi_pheno_MAC</p>
+<p>For example, on my machine, when I use the <code>pwd</code> command (print working directory), my download folder is located at: /Users/username/Desktop/BIMBAM_multi_pheno_MAC</p>
 <ol start="4" type="1">
 <li>Run <code>make clean</code> and <code>make all</code> terminal commands which will activate the software build automation tool to compile the C++ source code into an executable <code>bimbam</code> program.</li>
 </ol>
@@ -293,7 +293,7 @@ make all</code></pre>
 <p>Confirm that the install/move worked via this command:</p>
 <pre><code>which bimbam</code></pre>
 <p>For example, on my machine, <code>bimbam</code> is located at <code>/usr/local/bin/bimbam</code> now.</p>
-<p>Now if you type</p>
+<p>Now if you type:</p>
 <pre><code>bimbam</code></pre>
 <p>at the Unix prompt and hit return, it should print out this message:</p>
 <pre><code> BIMBAM version 0.99a, visit http://stephenslab.uchicago.edu for possible update.
@@ -302,11 +302,11 @@ make all</code></pre>
  Updated March 14 2009.</code></pre>
 <section id="modification-details" class="level5" data-number="1.2.2.1.1">
 <h5 data-number="1.2.2.1.1" class="anchored" data-anchor-id="modification-details"><span class="header-section-number">1.2.2.1.1</span> Modification details</h5>
-<p>If you are interested in more details related to the installation issue, and how we modified the makefile to correct this issue, please see our <a href="./InstallationHack.html">installation hack</a> page of this book or <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">Installation Appendix</a> of the GitHub repository.</p>
+<p>If you are interested in more details related to the installation issue, and how we modified the makefile to correct this issue, please see the <a href="./InstallationHack.html">installation hack</a> appendix of this book or <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">Installation Appendix</a> of the GitHub repository.</p>
 </section>
 <section id="troubleshooting" class="level5" data-number="1.2.2.1.2">
 <h5 data-number="1.2.2.1.2" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">1.2.2.1.2</span> Troubleshooting</h5>
-<p>Note that you need to have GSL (GNU Scientific Library) installed on your machine before you can install mvBIMBAM. GSL is an open-source software library that provides a wide range of mathematical and statistical functions for scientific and numerical computing. Please see our <a href="./Troubleshooting.html">troubleshooting</a> page of this book or <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">Installation Appendix</a> of the GitHub repository for tips on getting GSL installed on your machine.</p>
+<p>Note that you need to have GSL (GNU Scientific Library) installed on your machine before you can install mvBIMBAM. GSL is an open-source software library that provides a wide range of mathematical and statistical functions for scientific and numerical computing. Please see our <a href="./Troubleshooting.html">troubleshooting</a> appendix of this book or <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">Installation Appendix</a> of the GitHub repository for tips on getting GSL installed on your machine.</p>
 </section>
 </section>
 </section>
@@ -506,7 +506,7 @@ make all</code></pre>
 </section>
 <section id="examples" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="examples"><span class="header-section-number">1.4</span> Examples</h2>
-<p>To prepare the data before running the examples, see our <a href="./prep.html">data prep</a> chapter followed by our <a href="./bnlearn.html">bnlearn</a> and <a href="./mvbimbam.html">mvBIMBAM</a> chapters. Note that <code>.Rmd</code> versions of all files are available in our <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a>.</p>
+<p>To prepare the data before running the examples, see the <a href="./prep.html">data prep</a> chapter followed by the <a href="./bnlearn.html">bnlearn</a> and <a href="./mvbimbam.html">mvBIMBAM</a> chapters. Note that <code>.Rmd</code> versions of all files are available in our <a href="https://github.com/lwheinsberg/mvNUR">GitHub repository</a> for download or cloning.</p>
 
 
 </section>

@@ -207,7 +207,7 @@ g++ -static-libgcc -DIMPUTATION   -O3 control.o fpmath.o indiv.o diploid.o haplo
 clang: error: unsupported option '-static-libgcc'
 make[1]: *** [fp] Error 1
 make: *** [all] Error 2</code></pre>
-<p>which suggests there is an issue with the build process. To get around this, we “hacked” a solution by modifying the Makefile (located within the <code>src</code> folder). See a summary below, or a “track changes” comparison in <code>makefile_compare_AppleIntel.docx</code> or <code>makefile_compare_AppleSilicon_M1.docx</code> (located here in the <code>InstallationAppendix</code> folder) for details on how the makefile was modified.</p>
+<p>which suggests there is an issue with the build process. To get around this, we “hacked” a solution by modifying the Makefile (located within the <code>src</code> folder). See a summary below, or a “track changes” comparison in <code>makefile_compare_AppleIntel.docx</code> or <code>makefile_compare_AppleSilicon_M1.docx</code> (located in the <code>InstallationAppendix</code> folder of the <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">GitHub repository</a>) for details on how the makefile was modified.</p>
 <p>Note that the makefile changes are different for an Apple Silicon (e.g., 2021 M1) vs.&nbsp;an Apple Intel. If you are not sure which Mac you have, you can click on the apple symbol in the upper left corner of your machine. If you have an Apple silicon, the Chip will be listed as Apple M1 or M2. If you have the Apple Intel, you will see the processor listed as Intel Core i5, i7, or similar.</p>
 <section id="apple-intel-instructions" class="level3" data-number="B.1.1">
 <h3 data-number="B.1.1" class="anchored" data-anchor-id="apple-intel-instructions"><span class="header-section-number">B.1.1</span> APPLE INTEL INSTRUCTIONS</h3>
@@ -245,7 +245,7 @@ LIBS += `gsl-config --libs`</code></pre>
 <pre><code>fp: fp.o $(OBJS); $(CC) $(CFLAGS) $(OBJS) fp.o $(LDFLAGS) $(LIBS) -o bimbam</code></pre>
 <p>The <code>-static-libgcc</code> flag is related to linking the GCC (GNU Compiler Collection) runtime libraries statically. However, this flag is not supported by the Clang compiler, which is commonly used on macOS (including Apple Silicon M1 Macs). By removing it, the build rule becomes compatible with Clang and more common macOS build setups.</p>
 <p>Note also that Apple Silicon also requires the extra <code>$(LDFLAGS)</code> (where Intel does not) which is used to specify linker-related flags and options that may be specific to the architecture of M1 (not needed by Intel).</p>
-<p>A copy of the original Makefile, modified Makefile, and a Word document comparing the two can be found in the <code>Install_Problems</code> folder.</p>
+<p>A copy of the original Makefile, modified Makefile, and a Word document comparing the two can be found in the <code>InstallationAppendix</code> folder of the <a href="https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix">GitHub repository</a>.</p>
 <p>Note that this problem has been opened as an issue on the mvBIMBAM GitHub page https://github.com/heejungshim/mvBIMBAM/issues/3. Please check there for updates from the program architects.</p>
 
 

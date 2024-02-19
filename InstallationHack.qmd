@@ -12,7 +12,7 @@ make[1]: *** [fp] Error 1
 make: *** [all] Error 2
 ```
 
-which suggests there is an issue with the build process. To get around this, we "hacked" a solution by modifying the Makefile (located within the `src` folder). See a summary below, or a "track changes" comparison in `makefile_compare_AppleIntel.docx` or `makefile_compare_AppleSilicon_M1.docx` (located here in the `InstallationAppendix` folder) for details on how the makefile was modified. 
+which suggests there is an issue with the build process. To get around this, we "hacked" a solution by modifying the Makefile (located within the `src` folder). See a summary below, or a "track changes" comparison in `makefile_compare_AppleIntel.docx` or `makefile_compare_AppleSilicon_M1.docx` (located in the `InstallationAppendix` folder of the [GitHub repository](https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix)) for details on how the makefile was modified. 
 
 Note that the makefile changes are different for an Apple Silicon (e.g., 2021 M1) vs. an Apple Intel. If you are not sure which Mac you have, you can click on the apple symbol in the upper left corner of your machine. If you have an Apple silicon, the Chip will be listed as Apple M1 or M2. If you have the Apple Intel, you will see the processor listed as Intel Core i5, i7, or similar.
 
@@ -99,6 +99,6 @@ The `-static-libgcc` flag is related to linking the GCC (GNU Compiler Collection
 
 Note also that Apple Silicon also requires the extra `$(LDFLAGS)` (where Intel does not) which is used to specify linker-related flags and options that may be specific to the architecture of M1 (not needed by Intel). 
 
-A copy of the original Makefile, modified Makefile, and a Word document comparing the two can be found in the `Install_Problems` folder.
+A copy of the original Makefile, modified Makefile, and a Word document comparing the two can be found in the `InstallationAppendix` folder of the [GitHub repository](https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix).
 
 Note that this problem has been opened as an issue on the mvBIMBAM GitHub page https://github.com/heejungshim/mvBIMBAM/issues/3. Please check there for updates from the program architects.

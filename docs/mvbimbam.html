@@ -206,7 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">4.1</span> Overview</a>
   <ul class="collapse">
-  <li><a href="#mvbimbam" id="toc-mvbimbam" class="nav-link" data-scroll-target="#mvbimbam"><span class="header-section-number">4.1.1</span> mvBIMBAM</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">4.1.1</span> Acknowledgements</a></li>
+  <li><a href="#mvbimbam" id="toc-mvbimbam" class="nav-link" data-scroll-target="#mvbimbam"><span class="header-section-number">4.1.2</span> mvBIMBAM</a></li>
   </ul></li>
   <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries"><span class="header-section-number">4.2</span> Load libraries</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.3</span> Data</a></li>
@@ -249,12 +250,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">4.1</span> Overview</h2>
+<p>Note this code is dependent upon code from the <a href="./prep.html">data preparation</a> section which creates the mvBIMBAM input files detailed below.</p>
+<section id="acknowledgements" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">4.1.1</span> Acknowledgements</h3>
 <p>Please note that this code was adapted from previous work led by Jerry Zhang, Lacey Heinsberg, and Daniel Weeks:</p>
 <p>Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232.</p>
 <p><a href="https://github.com/lwheinsberg/mvCREBRF">GitHub Repository</a></p>
-<p>Note this code is dependent upon code from the <a href="./prep.html">data preparation</a> section which creates the mvBIMBAM input files detailed below.</p>
-<section id="mvbimbam" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">4.1.1</span> mvBIMBAM</h3>
+</section>
+<section id="mvbimbam" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">4.1.2</span> mvBIMBAM</h3>
 <p>mvBIMBAM is a command line program for multivariate genetic association analysis of multiple related phenotypes. In the mvBIMBAM framework, a global null model representing no association between phenotypes and genotypes is compared with an exhaustive combination of alternative models in which all different combinations of phenotype-genotype associations are considered (see <code>mph2</code> details below). For the alternative models, the mvBIMBAM methodology splits phenotype-genotype associations into all possible partitions of U, D, and I, each representing ‘unassociated’, ‘directly’, and ‘indirectly’ associated. Details about the analyses and interpretation can be found below. Installation and troubleshooting instructions can be found in the README file.</p>
 <p>NOTE: The software executable is called ‘bimbam’, but we refer to the program as ‘mvBIMBAM’ throughout.</p>
 </section>

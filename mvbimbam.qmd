@@ -2,13 +2,15 @@
 
 ## Overview
 
+Note this code is dependent upon code from the [data preparation](./prep.qmd) section which creates the mvBIMBAM input files detailed below.
+
+### Acknowledgements
+
 Please note that this code was adapted from previous work led by Jerry Zhang, Lacey Heinsberg, and Daniel Weeks:
 
 Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232.
 
 [GitHub Repository](https://github.com/lwheinsberg/mvCREBRF)
-
-Note this code is dependent upon code from the [data preparation](./prep.qmd) section which creates the mvBIMBAM input files detailed below.
 
 ### mvBIMBAM
 

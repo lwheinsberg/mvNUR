@@ -206,7 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">3.1</span> Overview</a>
   <ul class="collapse">
-  <li><a href="#bnlearn" id="toc-bnlearn" class="nav-link" data-scroll-target="#bnlearn"><span class="header-section-number">3.1.1</span> bnlearn</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">3.1.1</span> Acknowledgements</a></li>
+  <li><a href="#bnlearn" id="toc-bnlearn" class="nav-link" data-scroll-target="#bnlearn"><span class="header-section-number">3.1.2</span> bnlearn</a></li>
   </ul></li>
   <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries"><span class="header-section-number">3.2</span> Load Libraries</a></li>
   <li><a href="#read-in-the-synthetic-dataset" id="toc-read-in-the-synthetic-dataset" class="nav-link" data-scroll-target="#read-in-the-synthetic-dataset"><span class="header-section-number">3.3</span> Read in the synthetic dataset</a></li>
@@ -243,14 +244,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">3.1</span> Overview</h2>
+<section id="acknowledgements" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">3.1.1</span> Acknowledgements</h3>
 <p>This code was adapted from previous work led by Jerry Zhang, Lacey Heinsberg, and Daniel Weeks:</p>
 <p>Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: https://doi.org/10.1002/gepi.22508. PMID: 36352773; PMCID: PMC9892232.</p>
 <p><a href="https://github.com/lwheinsberg/mvCREBRF">GitHub Repository</a></p>
 <p>which was created/adapted from:</p>
 <p>Scutari M, Howell P, Balding DJ, Mackay I. Multiple Quantitative Trait Analysis Using Bayesian Networks. Genetics. Genetics; 2014 Apr 11;198(1):129–137. PMID: 25236454 PMCID: PMC4174925 DOI: https://doi.org/10.1534/genetics.114.165704</p>
 <p>NOTE: Some of the functions were copied from the bnlearn example at <a href="http://www.bnlearn.com/research/genetics14/">Link</a> as allowed under the Creative Commons Attribution-Share Alike License.</p>
-<section id="bnlearn" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="bnlearn"><span class="header-section-number">3.1.1</span> bnlearn</h3>
+</section>
+<section id="bnlearn" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="bnlearn"><span class="header-section-number">3.1.2</span> bnlearn</h3>
 <p>The R package <code>bnlearn</code> is helpful for learning the graphical structure of Bayesian networks, estimating their parameters, and performing some useful inference. Installation instructions can be found in the README file.</p>
 </section>
 </section>
@@ -278,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="read-in-the-synthetic-dataset" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="read-in-the-synthetic-dataset"><span class="header-section-number">3.3</span> Read in the synthetic dataset</h2>
-<p>As detailed in created in the <a href="./prep.html">data preparation</a> section, the synthetic phenotype data created for this example were adjusted for age and sex, quantile normalized, and outliers were removed. The quantile normalized adjusted data set is read in below. Please see the <a href="#0">introduction</a> section for more details about the data set and variables.</p>
+<p>As detailed in created in the <a href="./prep.html">data preparation</a> section, the synthetic phenotype data created for this example were adjusted for age and sex, quantile normalized, and outliers were removed. The quantile normalized adjusted data set is read in below. Please see the <a href="./intro.html">introduction</a> section for more details about the data set and variables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/QuantNorm.rds"</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -398,73 +402,73 @@ pain        0.2252510 0.2103236  0.3998224 0.2780501 0.4317377 1.0000000</code><
 <div class="cell-output cell-output-stdout">
 <pre><code>* overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3450264 
-  &gt; POSTCOR( EMO_tscore ): 0.3442969 
+  &gt; POSTCOR( EMO_tscore ): 0.3403866 
   &gt; PREDCOR( bdito ): 0.5794972 
-  &gt; POSTCOR( bdito ): 0.1609318 
+  &gt; POSTCOR( bdito ): 0.1593692 
   &gt; PREDCOR( FAT_tscore ): 0.7323366 
-  &gt; POSTCOR( FAT_tscore ): 0.4719177 
+  &gt; POSTCOR( FAT_tscore ): 0.4720501 
   &gt; PREDCOR( paohcif ): 0.6703178 
-  &gt; POSTCOR( paohcif ): 0.3092736 
+  &gt; POSTCOR( paohcif ): 0.3069664 
   &gt; PREDCOR( EPSscore ): 0.4307685 
-  &gt; POSTCOR( EPSscore ): 0.28519 
+  &gt; POSTCOR( EPSscore ): 0.2831476 
   &gt; PREDCOR( pain ): 0.5086095 
-  &gt; POSTCOR( pain ): 0.3461275 
+  &gt; POSTCOR( pain ): 0.3434269 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3668206 
-  &gt; POSTCOR( EMO_tscore ): 0.3680883 
+  &gt; POSTCOR( EMO_tscore ): 0.3637247 
   &gt; PREDCOR( bdito ): 0.5824107 
-  &gt; POSTCOR( bdito ): 0.167663 
+  &gt; POSTCOR( bdito ): 0.1726549 
   &gt; PREDCOR( FAT_tscore ): 0.7340804 
-  &gt; POSTCOR( FAT_tscore ): 0.4761457 
+  &gt; POSTCOR( FAT_tscore ): 0.4752316 
   &gt; PREDCOR( paohcif ): 0.6728188 
-  &gt; POSTCOR( paohcif ): 0.3141795 
+  &gt; POSTCOR( paohcif ): 0.3135133 
   &gt; PREDCOR( EPSscore ): 0.4332637 
-  &gt; POSTCOR( EPSscore ): 0.2830913 
+  &gt; POSTCOR( EPSscore ): 0.2874894 
   &gt; PREDCOR( pain ): 0.516585 
-  &gt; POSTCOR( pain ): 0.3446299 
+  &gt; POSTCOR( pain ): 0.3496712 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3362601 
-  &gt; POSTCOR( EMO_tscore ): 0.3353015 
+  &gt; POSTCOR( EMO_tscore ): 0.3361994 
   &gt; PREDCOR( bdito ): 0.6035443 
-  &gt; POSTCOR( bdito ): 0.1836631 
+  &gt; POSTCOR( bdito ): 0.1855383 
   &gt; PREDCOR( FAT_tscore ): 0.7327031 
-  &gt; POSTCOR( FAT_tscore ): 0.4650113 
+  &gt; POSTCOR( FAT_tscore ): 0.4654304 
   &gt; PREDCOR( paohcif ): 0.6564999 
-  &gt; POSTCOR( paohcif ): 0.3074048 
+  &gt; POSTCOR( paohcif ): 0.3081645 
   &gt; PREDCOR( EPSscore ): 0.4288491 
-  &gt; POSTCOR( EPSscore ): 0.287791 
+  &gt; POSTCOR( EPSscore ): 0.2853915 
   &gt; PREDCOR( pain ): 0.5386219 
-  &gt; POSTCOR( pain ): 0.3454372 
+  &gt; POSTCOR( pain ): 0.3478181 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3339423 
-  &gt; POSTCOR( EMO_tscore ): 0.3335947 
+  &gt; POSTCOR( EMO_tscore ): 0.3297242 
   &gt; PREDCOR( bdito ): 0.5858688 
-  &gt; POSTCOR( bdito ): 0.1647348 
+  &gt; POSTCOR( bdito ): 0.1586008 
   &gt; PREDCOR( FAT_tscore ): 0.7323323 
-  &gt; POSTCOR( FAT_tscore ): 0.4722075 
+  &gt; POSTCOR( FAT_tscore ): 0.4706874 
   &gt; PREDCOR( paohcif ): 0.674619 
-  &gt; POSTCOR( paohcif ): 0.3240604 
+  &gt; POSTCOR( paohcif ): 0.3182637 
   &gt; PREDCOR( EPSscore ): 0.4576816 
-  &gt; POSTCOR( EPSscore ): 0.2919336 
+  &gt; POSTCOR( EPSscore ): 0.2964976 
   &gt; PREDCOR( pain ): 0.5089625 
-  &gt; POSTCOR( pain ): 0.3572873 
+  &gt; POSTCOR( pain ): 0.3597486 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3341934 
-  &gt; POSTCOR( EMO_tscore ): 0.3337977 
+  &gt; POSTCOR( EMO_tscore ): 0.3354254 
   &gt; PREDCOR( bdito ): 0.590734 
-  &gt; POSTCOR( bdito ): 0.134816 
+  &gt; POSTCOR( bdito ): 0.1323364 
   &gt; PREDCOR( FAT_tscore ): 0.7350113 
-  &gt; POSTCOR( FAT_tscore ): 0.4739444 
+  &gt; POSTCOR( FAT_tscore ): 0.475086 
   &gt; PREDCOR( paohcif ): 0.670765 
-  &gt; POSTCOR( paohcif ): 0.3136811 
+  &gt; POSTCOR( paohcif ): 0.3177456 
   &gt; PREDCOR( EPSscore ): 0.4389516 
-  &gt; POSTCOR( EPSscore ): 0.2828249 
+  &gt; POSTCOR( EPSscore ): 0.2816867 
   &gt; PREDCOR( pain ): 0.5230457 
-  &gt; POSTCOR( pain ): 0.3402086 
+  &gt; POSTCOR( pain ): 0.342446 
 EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
  0.3432486  0.5884110  0.7332928  0.6690041  0.4379029  0.5191649 
 EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
- 0.3430158  0.1623617  0.4718453  0.3137199  0.2861662  0.3467381 
+ 0.3410921  0.1616999  0.4716971  0.3129307  0.2868426  0.3486221 
 threshold:  0.6 
 min strength &gt; threshold:  0.76 
 strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0.04 0.08 0.08 0.08 0.08 0.12 0.12 0.12 0.12 0.12 0.12 0.16 0.16 0.2 0.2 0.32 0.32 0.36 0.36 0.4 0.4 0.6 0.6 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.8 0.8 0.84 0.84 0.88 0.88 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>

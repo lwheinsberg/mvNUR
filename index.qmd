@@ -4,7 +4,7 @@
 
 This is a Quarto book created from markdown and executable code using Quarto within RStudio.
 
-The goal of this website is to provide detailed code and a fully synthetic example data set to guide nurse scientists and other researchers in conducting multivariate Bayesian analyses to examine associations between correlated phenotypes and single nucleotide polymorphisms (SNPs, i.e., genetic variants).
+The goal of this book is to provide detailed code and a fully synthetic example data set to guide nurse scientists and other researchers in conducting multivariate Bayesian analyses to examine associations between correlated phenotypes and single nucleotide polymorphisms (SNPs, i.e., genetic variants).
 
 Note that this content is available as a website (which you are currently reading) or as a [GitHub repository](https://github.com/lwheinsberg/mvNUR) (where all code can be downloaded/edited).
 
@@ -32,7 +32,7 @@ Copyright 2023, University of Pittsburgh. All Rights Reserved. License: [GPL-2](
     -   https://github.com/ajwills72/rminr
     -   https://www.andywills.info/rminr/#beginners
     -   https://www.youtube.com/watch?v=IrDUcdpPmdI
--   Power calculations
+-   Bayesian power calculations
     -   https://www.andywills.info/rminr/power-bayesian.html
 
 ## Acknowledgments
@@ -43,13 +43,13 @@ Please note that this book was created from content presented at the Internation
 
 which has been adapted for (hopeful) publication as a manuscript entitled:
 
-*Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE. A Guide to Multivariate Bayesian Analyses in Nursing Research. In preparation for submission to Biological Research for Nursing.*
+*Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE. A Guide to Multivariate Bayesian Analyses in Nursing Research. Submitted to Biological Research for Nursing.*
 
 I'd also like to express my gratitude to the following for their support and contributions to this repository:
 
 -   Support from the National Institutes of Health under award number K99HD107030 made this project possible, and for that, I'm truly grateful.
 
--   Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being "test users" and providing their invaluable feedback on this guide.
+-   Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being "test users" and providing their feedback on this guide.
 
 -   My deepest gratitude to Dr. Daniel Weeks. Without his guidance and inspiration, I would never have ventured into the world of Bayesian statistics, or pursued many other endeavors I once thought were beyond my capabilities.
 

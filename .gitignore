@@ -5,9 +5,10 @@
 Br_synthetic.csv
 .DS_Store
 .Rapp.history
-mvNUR_development.Rproj
+mvNUR.Rproj
 output/bimbam_out.snpdata.txt
 output/bimbam_out.mph.txt
 output/bimbam_out.mph.prob.txt
 output/bimbam_out.mph.BFs.txt
 output/bimbam_out.log.txt
+/.quarto/

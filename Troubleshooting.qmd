@@ -42,4 +42,4 @@ gsl-config --prefix
 
 Voila! (Hopefully :))
 
-Please move back to the installation instructions in the README file and try again! 
+Please move back to the installation instructions and try again! 
