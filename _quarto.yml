@@ -5,7 +5,7 @@ project:
   - webr-worker.js
   - coi-serviceworker.js
 book:
-  title: A Guide to Multivariate Bayesian Analyses in Nursing Research
+  title: A tutorial to support multivariate Bayesian analyses in nursing research
   author: Lacey W. Heinsberg, PhD, RN 
   date: today
   date-format: long
