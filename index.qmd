@@ -30,12 +30,21 @@ Copyright 2023, University of Pittsburgh. All Rights Reserved. License: [GPL-2](
 
 -   To learn more about Quarto books visit: <https://quarto.org/docs/books/>.
 -   R/Unix basics:
-    -   https://danieleweeks.github.io/HuGen2071/preparation.html
-    -   https://github.com/ajwills72/rminr
-    -   https://www.andywills.info/rminr/#beginners
-    -   https://www.youtube.com/watch?v=IrDUcdpPmdI
+    -   <https://danieleweeks.github.io/HuGen2071/preparation.html>
+    -   <https://github.com/ajwills72/rminr>
+    -   <https://www.andywills.info/rminr/#beginners>
+    -   <https://www.youtube.com/watch?v=IrDUcdpPmdI>
 -   Bayesian power calculations
-    -   https://www.andywills.info/rminr/power-bayesian.html
+    -   <https://www.andywills.info/rminr/power-bayesian.html>
+    -   <https://solomonkurz.netlify.app/blog/bayesian-power-analysis-part-i/>
+    - 	<https://cran.r-project.org/web/packages/BayesianPower/vignettes/bayesianpower.html>
+-   Other Bayesian software 
+    - [BayesSUR](https://github.com/mbant/BayesSUR)
+    - [tan](https://pgmpy.org/examples/Structure%20Learning%20with%20TAN.html)
+    - [jags](https://mcmc-jags.sourceforge.io/)
+    - [brms](https://paul-buerkner.github.io/brms/)
+    - [blavaan](https://ecmerkle.github.io/blavaan/)
+    - [bayesian_first_aid](https://github.com/rasmusab/bayesian_first_aid)
 
 ## Acknowledgments
 
