@@ -309,14 +309,30 @@ markdown, examples of each method can be found in
 # 7 Power calculation resources
 
 - <https://www.andywills.info/rminr/power-bayesian.html>
+- <https://solomonkurz.netlify.app/blog/bayesian-power-analysis-part-i/>
+- <https://cran.r-project.org/web/packages/BayesianPower/vignettes/bayesianpower.html>
 
-# 8 Contact information
+# 8 Other Bayesian software
+
+- [BayesSUR](https://github.com/mbant/BayesSUR)
+
+- [tan](https://pgmpy.org/examples/Structure%20Learning%20with%20TAN.html)
+
+- [jags](https://mcmc-jags.sourceforge.io/)
+
+- [brms](https://paul-buerkner.github.io/brms/)
+
+- [blavaan](https://ecmerkle.github.io/blavaan/)
+
+- [bayesian_first_aid](https://github.com/rasmusab/bayesian_first_aid)
+
+# 9 Contact information
 
 If you have any questions or comments, please feel free to contact me!
 
 Lacey W. Heinsberg, PhD, RN: <law145@pitt.edu>
 
-# 9 Acknowledgments
+# 10 Acknowledgments
 
 I’d like to express my gratitude to the following for their support and
 contributions to this repository:
