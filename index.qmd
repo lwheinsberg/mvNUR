@@ -10,7 +10,9 @@ Note that this content is available as a website (which you are currently readin
 
 Book web site: <https://lwheinsberg.github.io/mvNUR/>
 
-Book source code/GitHub repository: <https://github.com/lwheinsberg/mvNUR>
+GitHub repository: <https://github.com/lwheinsberg/mvNUR>
+
+Book source code: <https://github.com/lwheinsberg/mvNUR/tree/gh-pages>
 
 ## Author
 
