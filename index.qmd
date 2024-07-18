@@ -37,14 +37,14 @@ Copyright 2023, University of Pittsburgh. All Rights Reserved. License: [GPL-2](
 -   Bayesian power calculations
     -   <https://www.andywills.info/rminr/power-bayesian.html>
     -   <https://solomonkurz.netlify.app/blog/bayesian-power-analysis-part-i/>
-    - 	<https://cran.r-project.org/web/packages/BayesianPower/vignettes/bayesianpower.html>
--   Other Bayesian software 
-    - [BayesSUR](https://github.com/mbant/BayesSUR)
-    - [tan](https://pgmpy.org/examples/Structure%20Learning%20with%20TAN.html)
-    - [jags](https://mcmc-jags.sourceforge.io/)
-    - [brms](https://paul-buerkner.github.io/brms/)
-    - [blavaan](https://ecmerkle.github.io/blavaan/)
-    - [bayesian_first_aid](https://github.com/rasmusab/bayesian_first_aid)
+    -   <https://cran.r-project.org/web/packages/BayesianPower/vignettes/bayesianpower.html>
+-   Other Bayesian software
+    -   [BayesSUR](https://github.com/mbant/BayesSUR)
+    -   [tan](https://pgmpy.org/examples/Structure%20Learning%20with%20TAN.html)
+    -   [jags](https://mcmc-jags.sourceforge.io/)
+    -   [brms](https://paul-buerkner.github.io/brms/)
+    -   [blavaan](https://ecmerkle.github.io/blavaan/)
+    -   [bayesian_first_aid](https://github.com/rasmusab/bayesian_first_aid)
 
 ## Acknowledgments
 
@@ -54,11 +54,11 @@ Please note that this book was created from content presented at the Internation
 
 which has been adapted for (hopeful) publication as a manuscript entitled:
 
-*Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE. A Guide to Multivariate Bayesian Analyses in Nursing Research. Submitted to Biological Research for Nursing.*
+*Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE. Tutorial: Multivariate Bayesian Analyses in Nursing Research. Submitted to Biological Research for Nursing.*
 
 I'd also like to express my gratitude to the following for their support and contributions to this repository:
 
--   Support from the National Institutes of Health under award number K99HD107030 made this project possible, and for that, I'm truly grateful.
+-   Support from the National Institutes of Health under award numbers K99HD107030 and K99HD107030 made this project possible, and for that, I'm truly grateful.
 
 -   Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being "test users" and providing their feedback on this guide.
 
