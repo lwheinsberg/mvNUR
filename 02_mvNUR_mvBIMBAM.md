@@ -42,7 +42,8 @@ splits phenotype-genotype associations into all possible partitions of
 U, D, and I, each representing ‘unassociated’, ‘directly’, and
 ‘indirectly’ associated. Details about the analyses and interpretation
 can be found below. Installation and troubleshooting instructions can be
-found in the README file.
+found in the README file (distributed as permitted under the creators
+original GPL-3 license).
 
 NOTE: The software executable is called ‘bimbam’, but we refer to the
 program as ‘mvBIMBAM’ throughout.
