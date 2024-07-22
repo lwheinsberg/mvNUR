@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Guide to Multivariate Bayesian Analyses in Nursing Research - Appendix B — mvBIMBAM Installation Hack</title>
+<title>A tutorial to support multivariate Bayesian analyses in nursing research - Appendix B — mvBIMBAM Installation Hack</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Guide to Multivariate Bayesian Analyses in Nursing Research</a> 
+      <a href="./">A tutorial to support multivariate Bayesian analyses in nursing research</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -201,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="mac" class="level2" data-number="B.1">
 <h2 data-number="B.1" class="anchored" data-anchor-id="mac"><span class="header-section-number">B.1</span> Mac</h2>
-<p>The motivation behind modifying the makefile was that during installation, test users were getting the following error:</p>
+<p>The motivation behind modifying the makefile was that during installation (of mvBIMBAM “first release”), test users were getting the following error:</p>
 <pre><code>cd src &amp;&amp; /Applications/Xcode.app/Contents/Developer/usr/bin/make
 g++ -static-libgcc -DIMPUTATION   -O3 control.o fpmath.o indiv.o diploid.o haploid.o model.o param.o  fp.o -lm libgsl.a libgslcblas.a  -o bimbam
 clang: error: unsupported option '-static-libgcc'
@@ -226,7 +226,7 @@ LDFLAGS += -L/usr/local/Cellar/gsl/2.7.1/lib</code></pre>
 <pre><code>fp: fp.o $(OBJS); $(CC) $(CFLAGS) $(OBJS) fp.o $(LIBS) -o bimbam</code></pre>
 <p>The <code>-static-libgcc</code> flag is related to linking the GCC (GNU Compiler Collection) runtime libraries statically. However, this flag is not supported by the Clang compiler, which is commonly used on macOS (including Apple Silicon M1 Macs). By removing it, the build rule becomes compatible with Clang and more common macOS build setups.</p>
 <p>A copy of the original Makefile, modified Makefile, and a Word document comparing the two can be found in the <code>Install_Problems</code> folder.</p>
-<p>Note that this problem has been opened as an issue on the mvBIMBAM GitHub page https://github.com/heejungshim/mvBIMBAM/issues/3. Please check there for updates from the program architects.</p>
+<p>Note that this problem has been opened as an issue on the mvBIMBAM <a href="https://github.com/heejungshim/mvBIMBAM/issues/3">GitHub page</a>. Please check there for updates from the program architects.</p>
 </section>
 <section id="apple-silicon-m1" class="level3" data-number="B.1.2">
 <h3 data-number="B.1.2" class="anchored" data-anchor-id="apple-silicon-m1"><span class="header-section-number">B.1.2</span> APPLE SILICON (M1)</h3>

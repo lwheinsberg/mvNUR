@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Guide to Multivariate Bayesian Analyses in Nursing Research - Appendix A — Troubleshooting mvBIMBAM installation</title>
+<title>A tutorial to support multivariate Bayesian analyses in nursing research - Appendix A — Troubleshooting mvBIMBAM installation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Guide to Multivariate Bayesian Analyses in Nursing Research</a> 
+      <a href="./">A tutorial to support multivariate Bayesian analyses in nursing research</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -166,7 +166,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#mac-linux" id="toc-mac-linux" class="nav-link active" data-scroll-target="#mac-linux"><span class="header-section-number">A.1</span> Mac / Linux</a></li>
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows"><span class="header-section-number">A.2</span> Windows</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -190,26 +197,32 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Note that you need to have GSL (GNU Scientific Library) installed on your machine before you can install mvBIMBAM. GSL is an open-source software library that provides a wide range of mathematical and statistical functions for scientific and numerical computing. If you are having trouble installing mvBIMBAM, lack of GSL seems to be the most frequent cause.</p>
-<p>Using the terminal, check to see if you have GSL installed on your machine by asking for the version number:</p>
+<p>To install mvBIMBAM, you’ll need to use command line tools, which are programs that let you interact with your computer through text commands rather than clicking on icons. Think of it like giving your computer written instructions. You will also need to have GSL (GNU Scientific Library) installed on your machine. GSL is a free library that provides many useful mathematical and statistical functions for scientific computing. If you run into trouble installing mvBIMBAM, it’s often because GSL is not installed.</p>
+<p>Once you have command line tools installed, you can use your terminal to see if you have GSL installed on your machine by asking for the version number:</p>
 <pre><code>gsl-config --version</code></pre>
 <p>For example, on my machine, this command returns “2.7.1”.</p>
-<p>If GSL is not installed, the simplest way to install it is via homebrew. Homebrew is a popular package manager for macOS and Linux. It provides a convenient way to install, manage, and update software packages and libraries on your computer. Homebrew simplifies the process of setting up development tools and applications.</p>
-<p>First, install homebrew using the following terminal command:</p>
-<pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"</code></pre>
-<p>Confirm that it has been installed, and check for the path:</p>
+<p>If GSL is not installed, some installation instructions are below.</p>
+<section id="mac-linux" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="mac-linux"><span class="header-section-number">A.1</span> Mac / Linux</h2>
+<p>For Mac/Linux, the simplest way to install GSL is via homebrew. First, install homebrew following the instructions available at their website: <a href="https://docs.brew.sh/Installation" class="uri">https://docs.brew.sh/Installation</a>.</p>
+<p>To confirm that it has been installed, and check for the path:</p>
 <pre><code>brew --version
 brew --prefix</code></pre>
-<p>For example, on my machine, the first command returns “Homebrew 4.0.23” and the second returns “/opt/homebrew”. Note that this tutorial was developed on an Apple silicon (M1) machine. If you have an Apple Intel, the default homebrew install path will be “usr/local/Cellar” or “usr/local”.</p>
+<p>For example, on my machine, the first command returns “Homebrew 4.0.23” and the second returns “/opt/homebrew”, though this could vary based on the type of machine you are working on.</p>
 <p>Now let’s move on to installing GSL:</p>
 <pre><code>brew install gsl</code></pre>
 <p>Confirm install and path:</p>
 <pre><code>gsl-config --version 
 gsl-config --prefix</code></pre>
 <p>Voila! (Hopefully :))</p>
-<p>Please move back to the installation instructions and try again!</p>
+</section>
+<section id="windows" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="windows"><span class="header-section-number">A.2</span> Windows</h2>
+<p>To install GSL for windows, you can follow the instructions available here: <a href="https://gnuwin32.sourceforge.net/packages/gsl.htm" class="uri">https://gnuwin32.sourceforge.net/packages/gsl.htm</a> or <a href="https://www.gnu.org/software/gsl/extras/native_win_builds.html" class="uri">https://www.gnu.org/software/gsl/extras/native_win_builds.html</a></p>
+<p>Please move back to the installation instructions in the README file and try again!</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script>

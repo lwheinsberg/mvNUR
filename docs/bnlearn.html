@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Guide to Multivariate Bayesian Analyses in Nursing Research - 3&nbsp; bnlearn</title>
+<title>A tutorial to support multivariate Bayesian analyses in nursing research - 3&nbsp; bnlearn</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Guide to Multivariate Bayesian Analyses in Nursing Research</a> 
+      <a href="./">A tutorial to support multivariate Bayesian analyses in nursing research</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -262,36 +262,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-libraries" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="load-libraries"><span class="header-section-number">3.2</span> Load Libraries</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)      </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bnlearn)  </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)  </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'graph' package is a Bioconductor package</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># One of our tutorial test users had trouble installing graph and Rgraphviz packages and had to force install as shown below</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!require("BiocManager", quietly = TRUE))</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    install.packages("BiocManager")</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("graph", force = TRUE)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(graph)     </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)   </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggnetwork)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'Rgraphviz' is a Bioconductor packaage</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!require("BiocManager", quietly = TRUE))</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#    install.packages("BiocManager")</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("Rgraphviz", force = TRUE)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rgraphviz)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)      </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lme4' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in check_dep_version(): ABI version mismatch: 
+lme4 was built with Matrix ABI version 1
+Current Matrix ABI version is 0
+Please re-install lme4 from source or restore original 'Matrix' package</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bnlearn)  </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'graph' package is a Bioconductor package</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># One of our tutorial test users had trouble installing graph and Rgraphviz packages and had to force install as shown below</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!require("BiocManager", quietly = TRUE))</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    install.packages("BiocManager")</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("graph", force = TRUE)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(graph)     </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)   </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggnetwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggnetwork' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'Rgraphviz' is a Bioconductor packaage</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!require("BiocManager", quietly = TRUE))</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    install.packages("BiocManager")</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("Rgraphviz", force = TRUE)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rgraphviz)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="read-in-the-synthetic-dataset" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="read-in-the-synthetic-dataset"><span class="header-section-number">3.3</span> Read in the synthetic dataset</h2>
 <p>As detailed in created in the <a href="./prep.html">data preparation</a> section, the synthetic phenotype data created for this example were adjusted for age and sex, quantile normalized, and outliers were removed. The quantile normalized adjusted data set is read in below. Please see the <a href="./intro.html">introduction</a> section for more details about the data set and variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/QuantNorm.rds"</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/QuantNorm.rds"</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Read in traits/gene names created there as well.</p>
+<p>Read in trait/gene names created there as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"./data/TraitsGenes.RData"</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"./data/TraitsGenes.RData"</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading objects:
+  traits
+  genes
+  trait_mapping
+  custom_labels
+  custom_labels2
+  df_vertex_table</code></pre>
 </div>
-<p>Alternatively, store this information manually as shown below.</p>
+</div>
+<p>Alternatively, store this trait/gene name information manually as shown below.</p>
 <pre><code># Define the phenotypes of interest
 traits &lt;- c("EMO_tscore", "bdito", "FAT_tscore", "paohcif", "EPSscore", "pain") ###CUSTOMIZE**
 trait_mapping &lt;- c("Anxiety", "Depression", "Fatigue", "Cognitive function", "Sleepiness", "Pain") ###CUSTOMIZE**
@@ -308,7 +344,7 @@ genes &lt;- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="load-functions"><span class="header-section-number">3.4.1</span> Load functions</h3>
 <p>For simplicity, all bnlearn analysis and plotting functions are stored in see <a href="https://github.com/lwheinsberg/mvNUR/blob/main/bnlearn_functions.R"><code>bnlearn_functions.R</code></a> in the GitHub repository. See that file for details.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./bnlearn_functions.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./bnlearn_functions.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="apply-functions-and-visualize-results" class="level3" data-number="3.4.2">
@@ -316,13 +352,13 @@ genes &lt;- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs
 <section id="data-summaries" class="level4" data-number="3.4.2.1">
 <h4 data-number="3.4.2.1" class="anchored" data-anchor-id="data-summaries"><span class="header-section-number">3.4.2.1</span> Data summaries</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check dimensions of the synthetic data used here </span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check dimensions of the synthetic data used here </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 763  12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     rs4880         rs5746136        rs1041740        rs10432782    
  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
@@ -353,8 +389,8 @@ genes &lt;- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs
  3rd Qu.: 3.468126  
  Max.   :17.664804  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation structure of data</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df[,traits])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation structure of data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df[,traits])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           EMO_tscore     bdito FAT_tscore   paohcif  EPSscore      pain
 EMO_tscore  1.0000000 0.5990665  0.6372831 0.5440664 0.1828286 0.2252510
@@ -364,13 +400,13 @@ paohcif     0.5440664 0.5059705  0.5600751 1.0000000 0.1374550 0.2780501
 EPSscore    0.1828286 0.1838254  0.3750783 0.1374550 1.0000000 0.4317377
 pain        0.2252510 0.2103236  0.3998224 0.2780501 0.4317377 1.0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View list of traits/SNPs of interest</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View list of traits/SNPs of interest</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "EMO_tscore" "bdito"      "FAT_tscore" "paohcif"    "EPSscore"  
 [6] "pain"      </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "rs4880"     "rs5746136"  "rs1041740"  "rs10432782" "rs4135225" 
 [6] "rs7522705" </code></pre>
@@ -379,97 +415,97 @@ pain        0.2252510 0.2103236  0.3998224 0.2780501 0.4317377 1.0000000</code><
 </section>
 <section id="regular-graph" class="level4" data-number="3.4.2.2">
 <h4 data-number="3.4.2.2" class="anchored" data-anchor-id="regular-graph"><span class="header-section-number">3.4.2.2</span> Regular graph</h4>
-<p>The <code>run_plot_graph</code> function calls the <code>fit.the.model()</code> and <code>xval.the.model()</code> functions to learn and visualize the Bayesian networks in the data. This function also customizes node labels and appearance, and then returns results related to the network analysis. Note that the following function uses parallel computing which involves breaking down a complex task into smaller subtasks that can be executed simultaneously, or in parallel, by multiple processors or computers to speed up computationally intense calculations.</p>
-<p>The <code>fit.the.model()</code> function constructs the Bayesian network model by employing a constrained learning algorithm based on conditional independence testing, specifically the semi-interleaved HITON-PC method. In this process, the algorithm identifies “parent-child” relationships within the network, where nodes represent either phenotypic traits or genetic variants, and edges signify associations between these nodes. Notably, traits can have parent nodes that are either genetic variants or other traits, but they can only serve as parents to other traits, adhering to the constraint that genetic variants do not act on traits (since genotypes are constant across an individual’s lifespan).</p>
+<p>The <code>run_plot_graph</code> function calls the <code>fit.the.model()</code> and <code>xval.the.model()</code> functions to learn and visualize the Bayesian networks in the data. This function also customizes node labels and appearance, and then returns results related to the network analysis. Note that the following function uses parallel computing which involves breaking down a complex task into smaller subtasks that can be executed simultaneously in parallel, by multiple processors or computers to speed up computationally intense calculations.</p>
+<p>The <code>fit.the.model()</code> function constructs the Bayesian network model by employing a constrained learning algorithm based on conditional independence testing, specifically the semi-interleaved HITON-PC method. In this process, the algorithm identifies “parent-child” relationships within the network, where nodes represent either phenotypic traits or genetic variants, and edges signify associations between these nodes. Notably, traits can have parent nodes that are either genetic variants or other traits, but they can only serve as parents to other traits, adhering to the constraint that traits do not act on genetic variants (since genotypes are constant across an individual’s lifespan).</p>
 <p>To enforce this constraint, a “blacklist” is created using the <code>tiers2blacklist()</code> function, preventing arcs from being directed towards specific nodes. This restriction aims to guide the learning process by ensuring that known causal relationships are inferred in the correct direction from genetic variants to traits, while also allowing for customization to blacklist other traits if needed (e.g., you can customize this to force/restrict a trait-&gt;trait relationship).</p>
 <p>After the networks are learned, the nodes are categorized into subsets for visualization, and the network structures are determined by maximizing the Bayesian Information Criteria (BIC). This approach facilitates the construction of Bayesian networks that capture probabilistic relationships between traits and genetic variants, with the learned structures reflecting potential causal associations.</p>
 <p>Further details on the methodology can be found at http://www.bnlearn.com/research/genetics14/.</p>
-<p>The <code>xval.the.model()</code> function performs model training with n-fold cross-validation (in the case of this example, 5-fold cross-validation).</p>
+<p>The <code>xval.the.model()</code> function performs model training using n-fold cross-validation (in the case of this example, 5-fold cross-validation).</p>
 <p>During this process, the data set is divided into multiple partitions, with each partition serving as the test set while the remaining data is used for training. This process is repeated iteratively to ensure that all data points are included in the test set at least once.</p>
 <p>During each fold of cross-validation, the following steps are performed:</p>
 <ol type="A">
 <li>Data Splitting: The dataset is divided into a training set (dtraining) and a test set (dtest).</li>
 <li>Model Fitting: A Bayesian network model is fitted to the training data using the <code>fit.the.model()</code> function. This model captures the probabilistic relationships between phenotypic traits and genetic variants.</li>
 <li>Prediction: The model is used to predict the values of phenotypic traits on the test set. These predictions are stored in the prediction matrix.</li>
-<li>Posterior Estimation: Posterior estimates are computed for each trait based on the test data. These estimates are stored in the post matrix.</li>
+<li>Posterior Estimation: Posterior estimates are computed for each trait based on the test data. These estimates are stored in the posterior matrix.</li>
 <li>Correlation Computation: The correlations between the predicted and observed values for each trait are calculated, both before (predcor) and after (postcor) cross-validation. These correlations provide a measure of the model’s predictive performance.</li>
 <li>Ridge Regression (Optional): If the ridge parameter is set to true, ridge regression is applied to certain nodes of the Bayesian network model to improve model performance.</li>
 </ol>
 <p>Finally, the function returns various results, including the predicted values, posterior estimates, observed values, and correlation coefficients for each trait. Additionally, it provides the learned models for each fold of cross-validation. This process allows for the assessment of how well the Bayesian network model generalizes to unseen data and provides insights into its predictive capabilities.</p>
 <p>Here, we will call the above functions and plot the base graph showing only the directions of association but not the strengths.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_plot_graph</span>(<span class="at">data =</span> df, <span class="at">k_crossval =</span> <span class="dv">5</span>, <span class="at">k_iterations =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">ncluster =</span> <span class="dv">8</span>, <span class="at">custom_labels =</span> custom_labels2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_plot_graph</span>(<span class="at">data =</span> df, <span class="at">k_crossval =</span> <span class="dv">5</span>, <span class="at">k_iterations =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">ncluster =</span> <span class="dv">8</span>, <span class="at">custom_labels =</span> custom_labels2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>* overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3450264 
-  &gt; POSTCOR( EMO_tscore ): 0.3432149 
+  &gt; POSTCOR( EMO_tscore ): 0.3416667 
   &gt; PREDCOR( bdito ): 0.5794972 
-  &gt; POSTCOR( bdito ): 0.1493581 
+  &gt; POSTCOR( bdito ): 0.1517855 
   &gt; PREDCOR( FAT_tscore ): 0.7323366 
-  &gt; POSTCOR( FAT_tscore ): 0.4721915 
+  &gt; POSTCOR( FAT_tscore ): 0.4704887 
   &gt; PREDCOR( paohcif ): 0.6703178 
-  &gt; POSTCOR( paohcif ): 0.3133616 
+  &gt; POSTCOR( paohcif ): 0.3101085 
   &gt; PREDCOR( EPSscore ): 0.4307685 
-  &gt; POSTCOR( EPSscore ): 0.2839236 
+  &gt; POSTCOR( EPSscore ): 0.286787 
   &gt; PREDCOR( pain ): 0.5086095 
-  &gt; POSTCOR( pain ): 0.3444085 
+  &gt; POSTCOR( pain ): 0.3427205 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3668206 
-  &gt; POSTCOR( EMO_tscore ): 0.3649258 
+  &gt; POSTCOR( EMO_tscore ): 0.3639101 
   &gt; PREDCOR( bdito ): 0.5824107 
-  &gt; POSTCOR( bdito ): 0.1736931 
+  &gt; POSTCOR( bdito ): 0.1666548 
   &gt; PREDCOR( FAT_tscore ): 0.7340804 
-  &gt; POSTCOR( FAT_tscore ): 0.4764981 
+  &gt; POSTCOR( FAT_tscore ): 0.4733521 
   &gt; PREDCOR( paohcif ): 0.6728188 
-  &gt; POSTCOR( paohcif ): 0.3164147 
+  &gt; POSTCOR( paohcif ): 0.3133426 
   &gt; PREDCOR( EPSscore ): 0.4332637 
-  &gt; POSTCOR( EPSscore ): 0.2794015 
+  &gt; POSTCOR( EPSscore ): 0.2901038 
   &gt; PREDCOR( pain ): 0.516585 
-  &gt; POSTCOR( pain ): 0.3465886 
+  &gt; POSTCOR( pain ): 0.3468146 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3362601 
-  &gt; POSTCOR( EMO_tscore ): 0.3320251 
+  &gt; POSTCOR( EMO_tscore ): 0.3364635 
   &gt; PREDCOR( bdito ): 0.6035443 
-  &gt; POSTCOR( bdito ): 0.186092 
+  &gt; POSTCOR( bdito ): 0.1824601 
   &gt; PREDCOR( FAT_tscore ): 0.7327031 
-  &gt; POSTCOR( FAT_tscore ): 0.46589 
+  &gt; POSTCOR( FAT_tscore ): 0.4677244 
   &gt; PREDCOR( paohcif ): 0.6564999 
-  &gt; POSTCOR( paohcif ): 0.3129874 
+  &gt; POSTCOR( paohcif ): 0.3110729 
   &gt; PREDCOR( EPSscore ): 0.4288491 
-  &gt; POSTCOR( EPSscore ): 0.285313 
+  &gt; POSTCOR( EPSscore ): 0.2909555 
   &gt; PREDCOR( pain ): 0.5386219 
-  &gt; POSTCOR( pain ): 0.3488292 
+  &gt; POSTCOR( pain ): 0.3432052 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3339423 
-  &gt; POSTCOR( EMO_tscore ): 0.3363876 
+  &gt; POSTCOR( EMO_tscore ): 0.3334984 
   &gt; PREDCOR( bdito ): 0.5858688 
-  &gt; POSTCOR( bdito ): 0.1649306 
+  &gt; POSTCOR( bdito ): 0.1672448 
   &gt; PREDCOR( FAT_tscore ): 0.7323323 
-  &gt; POSTCOR( FAT_tscore ): 0.4748571 
+  &gt; POSTCOR( FAT_tscore ): 0.4742644 
   &gt; PREDCOR( paohcif ): 0.674619 
-  &gt; POSTCOR( paohcif ): 0.3253241 
+  &gt; POSTCOR( paohcif ): 0.3211817 
   &gt; PREDCOR( EPSscore ): 0.4576816 
-  &gt; POSTCOR( EPSscore ): 0.2945323 
+  &gt; POSTCOR( EPSscore ): 0.2943248 
   &gt; PREDCOR( pain ): 0.5089625 
-  &gt; POSTCOR( pain ): 0.3626541 
+  &gt; POSTCOR( pain ): 0.3582026 
 * overall cross-validated correlations:
   &gt; PREDCOR( EMO_tscore ): 0.3341934 
-  &gt; POSTCOR( EMO_tscore ): 0.3307286 
+  &gt; POSTCOR( EMO_tscore ): 0.332263 
   &gt; PREDCOR( bdito ): 0.590734 
-  &gt; POSTCOR( bdito ): 0.1405121 
+  &gt; POSTCOR( bdito ): 0.1304614 
   &gt; PREDCOR( FAT_tscore ): 0.7350113 
-  &gt; POSTCOR( FAT_tscore ): 0.4731391 
+  &gt; POSTCOR( FAT_tscore ): 0.4731937 
   &gt; PREDCOR( paohcif ): 0.670765 
-  &gt; POSTCOR( paohcif ): 0.3199736 
+  &gt; POSTCOR( paohcif ): 0.3126895 
   &gt; PREDCOR( EPSscore ): 0.4389516 
-  &gt; POSTCOR( EPSscore ): 0.2822915 
+  &gt; POSTCOR( EPSscore ): 0.2803911 
   &gt; PREDCOR( pain ): 0.5230457 
-  &gt; POSTCOR( pain ): 0.3375159 
+  &gt; POSTCOR( pain ): 0.3405209 
 EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
  0.3432486  0.5884110  0.7332928  0.6690041  0.4379029  0.5191649 
 EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
- 0.3414564  0.1629172  0.4725151  0.3176123  0.2850924  0.3479993 
+ 0.3415604  0.1597213  0.4718047  0.3136791  0.2885124  0.3462928 
 threshold:  0.6 
 min strength &gt; threshold:  0.76 
 strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0.04 0.08 0.08 0.08 0.08 0.12 0.12 0.12 0.12 0.12 0.12 0.16 0.16 0.2 0.2 0.32 0.32 0.36 0.36 0.4 0.4 0.6 0.6 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.8 0.8 0.84 0.84 0.88 0.88 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
@@ -492,17 +528,17 @@ strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 <p>Edge direction represents the probability of the edge’s direction conditional on the edge’s presence within the network (i.e., the number of times the edge traveled in a specific direction out of the total number of iterations in which it was present).</p>
 <p>An edge is included in the network graph if its strength is larger than a significance threshold learned from the iterative samples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redraw graph adding strengths/directions to association lines using function created above </span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we use a threshold of 0.9 to indicate "strong" associations</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, edges with a strength &gt;0.9 will be solid, while edges with a strength &lt;0.9 will be dashed</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">redraw.graph.labels</span>(</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>averaged2,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>strength2,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>averaged,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>traits,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">custom.threshold =</span> <span class="fl">0.90</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redraw graph adding strengths/directions to association lines using function created above </span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we use a threshold of 0.9 to indicate "strong" associations</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, edges with a strength &gt;0.9 will be solid, while edges with a strength &lt;0.9 will be dashed</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">redraw.graph.labels</span>(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>averaged2,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>strength2,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>averaged,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>traits,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">custom.threshold =</span> <span class="fl">0.90</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -513,10 +549,10 @@ strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 </div>
 <p>Here we can visualize the strengths and directions as a table.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize strengths/directions as a table </span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>strength2 <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(strength <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> direction <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> strength <span class="sc">&gt;</span> results<span class="sc">$</span>threshold) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(strength) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize strengths/directions as a table </span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>strength2 <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(strength <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> direction <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> strength <span class="sc">&gt;</span> results<span class="sc">$</span>threshold) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(strength) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -699,13 +735,13 @@ strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 <h4 data-number="3.4.2.4" class="anchored" data-anchor-id="ggnetwork-graph"><span class="header-section-number">3.4.2.4</span> ggnetwork graph</h4>
 <p>Finally, we redraw the graph again. This time, we are changing the colors, line types, and using <code>ggrepel</code> so that node and edge labels do not overlap.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redraw graph in black and white using ggnetwork through the function created above </span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">redraw.label.ggnet</span>(results<span class="sc">$</span>averaged2,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>strength2,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>averaged,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>traits, </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df_vertex_table =</span> df_vertex_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redraw graph in black and white using ggnetwork through the function created above </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">redraw.label.ggnet</span>(results<span class="sc">$</span>averaged2,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>strength2,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>averaged,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                   results<span class="sc">$</span>traits, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df_vertex_table =</span> df_vertex_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -714,8 +750,8 @@ strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 </div>
 </div>
 </div>
-<p>Interpretation: Given the complexity of this plot, let’s focus on breaking apart a few results for a single variant, rs5746136. In this example figure, we see direct associations (solid arrows pointing away from the variant) between the rs5746136 with sleepiness and fatigue, and a weaker direct association (dashed line pointing away from the variant) with cognitive function. We also observe an indirect association between rs5746136 and cognitive function through fatigue which can be interpreted as cognitive function being conditionally independent of rs5746136 given the presence of fatigue.</p>
-<p>In this figure, the strengths (Es) and directions (Ed) of the relationships are also depicted along the edges (Es:Ed). As described above, the strength is a measure of confidence of that edge while fixing the rest of the network structure and is defined as the empirical frequency a specific edge is observed over a set of networks learned from iterations (i.e., the number of times the edge was present out of the total number of iterations). Edge direction represents the probability of the edge’s direction conditional on the edge’s presence within the network (i.e., the number of times the edge traveled in a specific direction out of the total number of iterations in which it was present). So in the example figure, we see an association between rs5746136 and fatigue with Es:Ed values of 1:1. This means that the edge was present in 100% of all iterations and the relationship traveled from the rs5746136 variant (“parent”) to fatigue (“child”) 100% of the time. Note that in our “blacklist” code above, we specified that all variants could only be a “parent” and not a “child” – so directions of 1 facing away from variants to symptoms are expected. This is not the case with the arrow traveling from cognitive function to pain. With Es:Ed values of 0.88:0.91, this relationship was observed in 88% of iterations but traveled in the shown direction in only 91% of realizations. Finally, note that edges with a strength &gt;0.9 are solid, while edges with a strength &lt;0.9 are dashed.</p>
+<p>Interpretation: Given the complexity of this plot, let’s focus on breaking apart a few results for a single variant, rs5746136. In this example figure, we see direct associations (solid arrows pointing away from the variant) between the rs5746136 with sleepiness and fatigue, and a weaker direct association (dashed line pointing away from the variant) with cognitive function. We also observe indirect associations between rs5746136 and pain through sleepiness, which can be interpreted as pain being conditionally independent of rs5746136 given the presence of sleepiness.</p>
+<p>In this figure, the strengths (Es) and directions (Ed) of the relationships are also depicted along the edges (Es:Ed). As described above, the strength is a measure of confidence of that edge while fixing the rest of the network structure and is defined as the empirical frequency a specific edge is observed over a set of networks learned from iterations (i.e., the number of times the edge was present out of the total number of iterations). Edge direction represents the probability of the edge’s direction conditional on the edge’s presence within the network (i.e., the number of times the edge traveled in a specific direction out of the total number of iterations in which it was present). So in this figure, we see an association between rs5746136 and fatigue with Es:Ed values of 1:1. This means that the edge was present in 100% of all iterations and the relationship traveled from the rs5746136 variant (“parent”) to fatigue (“child”) 100% of the time. Note that in our “blacklist” code above, we specified that all variants could only be a “parent” and not a “child” – so directions of 1 on arrows travelling from variants to symptoms are expected. Note that, as the arrow traveling from cognitive function to pain illustrates, edge strength and direction may be less than 1. With Es:Ed values of 0.88:0.91, this relationship was observed in 88% of iterations but traveled in the shown direction in only 91% of realizations. Finally, note that in the figure edges with a strength &gt;0.9 are solid, while edges with a strength &lt;0.9 are dashed.</p>
 </section>
 </section>
 </section>

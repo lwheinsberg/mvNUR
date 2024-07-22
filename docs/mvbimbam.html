@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Guide to Multivariate Bayesian Analyses in Nursing Research - 4&nbsp; mvBIMBAM</title>
+<title>A tutorial to support multivariate Bayesian analyses in nursing research - 4&nbsp; mvBIMBAM</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Guide to Multivariate Bayesian Analyses in Nursing Research</a> 
+      <a href="./">A tutorial to support multivariate Bayesian analyses in nursing research</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="mvbimbam" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">4.1.2</span> mvBIMBAM</h3>
-<p>mvBIMBAM is a command line program for multivariate genetic association analysis of multiple related phenotypes. In the mvBIMBAM framework, a global null model representing no association between phenotypes and genotypes is compared with an exhaustive combination of alternative models in which all different combinations of phenotype-genotype associations are considered (see <code>mph2</code> details below). For the alternative models, the mvBIMBAM methodology splits phenotype-genotype associations into all possible partitions of U, D, and I, each representing ‘unassociated’, ‘directly’, and ‘indirectly’ associated. Details about the analyses and interpretation can be found below. Installation and troubleshooting instructions can be found in the README file.</p>
+<p>mvBIMBAM is a command line program for multivariate genetic association analysis of multiple related phenotypes. In the mvBIMBAM framework, a global null model representing no association between phenotypes and genotypes is compared with an exhaustive combination of alternative models in which all different combinations of phenotype-genotype associations are considered (see the <code>mph 2</code> analysis parameter details below). For the alternative models, the mvBIMBAM methodology splits phenotype-genotype associations into all possible partitions of U, D, and I, each representing ‘unassociated’, ‘directly’, and ‘indirectly’ associated. Details about the analyses and interpretation can be found below.</p>
 <p>NOTE: The software executable is called ‘bimbam’, but we refer to the program as ‘mvBIMBAM’ throughout.</p>
 </section>
 </section>
@@ -278,9 +278,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="data"><span class="header-section-number">4.3</span> Data</h2>
-<p>Most of our data (created in the <a href="./prep.html">data preparation</a> section) are simply called by the system (see below) and not formerly loaded into R. Here though, we will read in our stored lists of phenotypes/variants of interest. See the <a href="./intro.html">introduction section</a> for information about phenotypes and SNPs of interest.</p>
+<p>Most of our data (created in the <a href="./prep.html">data preparation</a> section) are directly analyzed by the mvBIMBAM command line program (see below) and not formerly loaded into R. Here though, we will read in our stored lists of phenotypes/variants of interest. See the <a href="./intro.html">introduction section</a> for information about phenotypes and SNPs of interest.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"./data/TraitsGenes.RData"</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"./data/TraitsGenes.RData"</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>) <span class="do">###CUSTOMIZE** (if input file name was changed in 00_ workflow)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading objects:
+  traits
+  genes
+  trait_mapping
+  custom_labels
+  custom_labels2
+  df_vertex_table</code></pre>
+</div>
 </div>
 <p>Could also hard code these variables as shown below.</p>
 <pre><code>traits &lt;- c("EMO_tscore", "bdito", "FAT_tscore", "paohcif", "EPSscore", "pain") ###CUSTOMIZE**
@@ -292,14 +301,28 @@ genes &lt;- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs
 <section id="mvbimbam-analyses" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="mvbimbam-analyses"><span class="header-section-number">4.4</span> mvBIMBAM analyses</h2>
 <p>We will now apply mvBIMBAM to the synthetic data set we are working with. Rather than navigating the analyses in the terminal, we can make our code reproducible in R and call mvBIMBAM through the R using <code>call system()</code>. More information about the program can be found under the original <a href="https://github.com/heejungshim/mvBIMBAM/blob/master/doc/mvBIMBAM_Manual.pdf">mvBIMBAM documentation</a> on GitHub. In brief, the command we need contains the following parameters:</p>
-<p>-g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt) -p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt) -o: prefix for output files (for our example we will use: bimbam_out) -f: number of phenotypes to analyze (length(traits), for our example this number is 6) -A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4) -mph1 vs.&nbsp;mph2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph2) -r: random seed for reproducibility of results**</p>
+<p>-g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt)<br>
+-p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt)<br>
+-o: prefix for output files (for our example we will use: bimbam_out)<br>
+-f: number of phenotypes to analyze (length(traits), for our example this number is 6) -A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)<br>
+-mph 1 vs.&nbsp;mph 2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph 2)<br>
+-r: random seed for reproducibility of results**</p>
 <p>**Random seed: The mvBIMBAM article states: “We maximized the likelihood using an EM algorithm; four independent runs of the algorithm from different starting points produced essentially identical results.” This appears to be implemented in a random way, and so depends on the random number seed. For the purposes of this tutorial, we set a seed number so that the results would be identical each time. In practice, this step is not necessary, so the “-r 5254” section can be deleted from the code below.</p>
-<p>A note about <code>mph1</code> vs.&nbsp;<code>mph2</code>: In brief, <code>-mph1</code> performs a simple multivariate test of the null hypothesis vs a general multivariate alternative. Because it does not consider all partitions of the alternative hypothesis, it is quite fast, can handle a moderately large number of phenotypes, and be run on a whole-genome scale. However, it was originally intended to be used only as needed in an initial filtering step before running the more computationally-intensive <code>-mph 2</code> analyses. Because of the way <code>-mph1</code> functions, it does not allow you to ask interesting questions such as which phenotypes are associated with each SNP. To do this more detailed analysis use the <code>-mph 2</code> option. Note that if you have only a handful of phenotypes, you may be able to run the <code>-mph 2</code> analysis genome wide on all variants and skip <code>-mph1</code> all together.</p>
+<p>A note about <code>mph 1</code> vs.&nbsp;<code>mph 2</code>: In brief, <code>-mph 1</code> performs a simple multivariate test of the null hypothesis vs a general multivariate alternative. Because it does not consider all partitions of the alternative hypothesis, it is quite fast, can handle a moderately large number of phenotypes, and be run on a whole-genome scale. However, it was originally intended to be used only as needed in an initial filtering step before running the more computationally-intensive <code>-mph 2</code> analyses. Because of the way <code>-mph 1</code> functions, it does not allow you to ask interesting questions such as which phenotypes are associated with each SNP. To do this more detailed analysis use the <code>-mph 2</code> option. Note that if you have only a handful of phenotypes, you may be able to run the <code>-mph 2</code> analysis genome wide on all variants and skip <code>-mph 1</code> all together.</p>
 <p>A quick warning from the creators of mvBIMBAM: the prior used in mvBIMBAM is based on the idea that if a variant is associated with one phenotype, then it is likely associated with multiple phenotypes. That is, it is relatively permissive of associations with multiple phenotypes, and does not attempt to be “skeptical” of additional associations. In this sense it is more suited to hypothesis generation than of hypothesis testing. The prior can be changed to be more skeptical, but this adjustment has not been explored in detail as it is beyond the scope of this tutorial.</p>
+<p>We now use the ‘system’ command to run the mvBIMBAM program on our data set, which outputs the following messages:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call system() to run mvBIMBAM by specifying settings for analysis using </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the following settings:  </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>call <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"bimbam -g ./inputs/geno_bimbam.txt -p ./inputs/pheno_bimbam.txt -o bimbam_out -mph 2 -f "</span>, <span class="fu">length</span>(traits), <span class="st">" -A 0.05 -A 0.1 -A 0.2 -A 0.4 -r 5254"</span>) </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">###CUSTOMIZE** (call object, do so if input file names (i.e., geno_bimbam.txt or pheno_bimbam.txt) were changed in 00_ workflow)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">###CUSTOMIZE** (optional, can change output file name from bimbam_out to a name of your choice)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(call)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "bimbam -g ./inputs/geno_bimbam.txt -p ./inputs/pheno_bimbam.txt -o bimbam_out -mph 2 -f 6 -A 0.05 -A 0.1 -A 0.2 -A 0.4 -r 5254"</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Please note that this can take a few minutes</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(call, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "-bimbam: file 0 has 763 individual and 6 snps"   
 [2] "-bimbam: read file 0 again "                     
@@ -322,128 +345,121 @@ attr(,"status")
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="bayes-factors-bf"><span class="header-section-number">4.5.1</span> Bayes factors (BF)</h3>
 <p>The evidence against the null hypothesis is the sum of Bayes factors (BF) (log10 scale) of all partitions weighted by a diffuse prior. Let’s read in our BF factor results file to take a look.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.sigfig =</span> <span class="dv">10</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"./output/bimbam_out.mph.BFs.txt"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">###CUSTOMIZE** (if output file names are changed in the call object above)</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> m1 <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(<span class="sc">~</span><span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.na</span>(.)))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"SNP"</span>, <span class="st">"BF"</span>, <span class="st">"BF_All_Partition"</span>, trait_mapping)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.sigfig =</span> <span class="dv">10</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"./output/bimbam_out.mph.BFs.txt"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">###CUSTOMIZE** (if output file names are changed in the call object above)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> m1 <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(<span class="sc">~</span><span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.na</span>(.)))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"SNP"</span>, <span class="st">"BF"</span>, <span class="st">"BF_All_Partition"</span>, trait_mapping)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(m1)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> m1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>BF_All_Partition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(m1, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Bayes Factors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(m1, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Bayes Factors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Bayes Factors (continued below)</caption>
 <colgroup>
 <col style="width: 17%">
 <col style="width: 10%">
-<col style="width: 26%">
 <col style="width: 13%">
 <col style="width: 17%">
 <col style="width: 13%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">SNP</th>
 <th style="text-align: center;">BF</th>
-<th style="text-align: center;">BF_All_Partition</th>
 <th style="text-align: center;">Anxiety</th>
 <th style="text-align: center;">Depression</th>
 <th style="text-align: center;">Fatigue</th>
+<th style="text-align: center;">Cognitive.function</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">rs4880</td>
 <td style="text-align: center;">11.64</td>
-<td style="text-align: center;">12</td>
 <td style="text-align: center;">-0.2122</td>
 <td style="text-align: center;">0.9347</td>
 <td style="text-align: center;">-0.405</td>
+<td style="text-align: center;">2.041</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">rs5746136</td>
 <td style="text-align: center;">8.751</td>
-<td style="text-align: center;">9.662</td>
 <td style="text-align: center;">0.1084</td>
 <td style="text-align: center;">-0.3045</td>
 <td style="text-align: center;">0.6435</td>
+<td style="text-align: center;">0.2681</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">rs1041740</td>
 <td style="text-align: center;">13.69</td>
-<td style="text-align: center;">14.4</td>
 <td style="text-align: center;">12.52</td>
 <td style="text-align: center;">0.6702</td>
 <td style="text-align: center;">4.629</td>
+<td style="text-align: center;">6.156</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">rs10432782</td>
 <td style="text-align: center;">4.878</td>
-<td style="text-align: center;">5.472</td>
 <td style="text-align: center;">1.619</td>
 <td style="text-align: center;">1.85</td>
 <td style="text-align: center;">-0.3186</td>
+<td style="text-align: center;">0.05509</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">rs4135225</td>
 <td style="text-align: center;">32.48</td>
-<td style="text-align: center;">33.08</td>
 <td style="text-align: center;">0.6325</td>
 <td style="text-align: center;">1.603</td>
 <td style="text-align: center;">25.11</td>
+<td style="text-align: center;">5.586</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">rs7522705</td>
 <td style="text-align: center;">1.672</td>
-<td style="text-align: center;">2.006</td>
 <td style="text-align: center;">-0.2782</td>
 <td style="text-align: center;">-0.2978</td>
 <td style="text-align: center;">-0.2944</td>
+<td style="text-align: center;">0.5971</td>
 </tr>
 </tbody>
 </table>
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 29%">
 <col style="width: 18%">
 <col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Cognitive.function</th>
 <th style="text-align: center;">Sleepiness</th>
 <th style="text-align: center;">Pain</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">2.041</td>
 <td style="text-align: center;">0.02955</td>
 <td style="text-align: center;">3.437</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">0.2681</td>
 <td style="text-align: center;">6.421</td>
 <td style="text-align: center;">0.6853</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">6.156</td>
 <td style="text-align: center;">0.00889</td>
 <td style="text-align: center;">-0.2024</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">0.05509</td>
 <td style="text-align: center;">-0.05979</td>
 <td style="text-align: center;">-0.1757</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">5.586</td>
 <td style="text-align: center;">4.684</td>
 <td style="text-align: center;">11.63</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">0.5971</td>
 <td style="text-align: center;">-0.3565</td>
 <td style="text-align: center;">0.2123</td>
 </tr>
@@ -452,50 +468,44 @@ attr(,"status")
 </div>
 </div>
 <p>Interpretation: The above table presents the overall log10 BF for the network, and individual log10 BFs for each trait. Strong evidence of association is defined as log10 BF &gt; 5; suggestive evidence is defined as 1.5 &lt; log10 BF &lt; 5; and negligible evidence is defined as log10 BF &lt; 1.5.</p>
-<p>In this synthetic data set, we see that all SNPs (rs7522705 less so and rs4135225 more so) appear to play a strong role in this network. rs4880 has suggestive associations with cognitive function and pain; rs5746136 has significant associations with sleepiness; rs1041740 has significant associations with anxiety and cognitive function and a suggestive association with fatigue, etc.</p>
+<p>In this synthetic data set, we see that all SNPs (rs7522705 less so and rs4135225 more so) appear to play a role in this network. rs4880 has suggestive associations with cognitive function and pain; rs5746136 has significant associations with sleepiness; rs1041740 has significant associations with anxiety and cognitive function and a suggestive association with fatigue, etc.</p>
 </section>
 <section id="bayesian-posterior-probabilities-of-association" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="bayesian-posterior-probabilities-of-association"><span class="header-section-number">4.5.2</span> Bayesian posterior probabilities of association</h3>
-<p>In addition to log10 BFs, probabilities for no association, direct association, and indirect association are given as output while marginal posterior probabilities of association (MPPA) are calculated by summing the marginal posterior probabilities of direct and indirect association.</p>
+<p>In addition to log10 BFs, probabilities for no association, direct association, and indirect association are output while marginal posterior probabilities of association (MPPA) are calculated by summing the marginal posterior probabilities of direct and indirect association.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in second result file</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./output/bimbam_out.mph.prob.txt"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty list to store the matrix for each rs#</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>matrix_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(s))</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Process each line</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(s)) {</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split the line by spaces</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  split_values <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(s[i], <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the rs# value</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  rs <span class="ot">&lt;-</span> split_values[<span class="dv">1</span>]</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">na.omit</span>(<span class="fu">as.numeric</span>(<span class="fu">str_split</span>(s, <span class="st">" "</span>)[[i]])), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  m2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(m2, <span class="dv">1</span> <span class="sc">-</span> (m2[<span class="dv">1</span>,] <span class="sc">+</span> m2[<span class="dv">2</span>,]))</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the column and row names</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(m2) <span class="ot">&lt;-</span> trait_mapping</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(m2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(rs, <span class="st">"_Unassociated"</span>), <span class="fu">paste0</span>(rs, <span class="st">"_Directly"</span>), <span class="fu">paste0</span>(rs, <span class="st">"_Indirectly"</span>))</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the matrix in the list, using rs# as the name</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  matrix_list[[i]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">rs =</span> rs, <span class="at">m2 =</span> m2)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all matrices into a single matrix</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(matrix_list, <span class="cf">function</span>(x) x<span class="sc">$</span>m))</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(m2)) {</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  m2[, i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">""</span>, m2[, i]))</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in second result file</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./output/bimbam_out.mph.prob.txt"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty list to store the matrix for each rs#</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>matrix_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(s))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Process each line</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(s)) {</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split the line by spaces</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  split_values <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(s[i], <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the rs# value</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  rs <span class="ot">&lt;-</span> split_values[<span class="dv">1</span>]</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">na.omit</span>(<span class="fu">as.numeric</span>(<span class="fu">str_split</span>(s, <span class="st">" "</span>)[[i]])), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  m2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(m2, <span class="dv">1</span> <span class="sc">-</span> (m2[<span class="dv">1</span>,] <span class="sc">+</span> m2[<span class="dv">2</span>,]))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the column and row names</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(m2) <span class="ot">&lt;-</span> trait_mapping</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(m2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(rs, <span class="st">"_Unassociated"</span>), <span class="fu">paste0</span>(rs, <span class="st">"_Directly"</span>), <span class="fu">paste0</span>(rs, <span class="st">"_Indirectly"</span>))</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the matrix in the list, using rs# as the name</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  matrix_list[[i]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">rs =</span> rs, <span class="at">m2 =</span> m2)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all matrices into a single matrix</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(matrix_list, <span class="cf">function</span>(x) x<span class="sc">$</span>m))</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(m2)) {</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  m2[, i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">""</span>, m2[, i]))</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rs104_dir <span class="ot">&lt;-</span> m2[<span class="dv">8</span>,<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rs413_no <span class="ot">&lt;-</span> m2[<span class="dv">13</span>,<span class="dv">5</span>]<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>rs413_d <span class="ot">&lt;-</span> m2[<span class="dv">14</span>,<span class="dv">5</span>]<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>rs413_i <span class="ot">&lt;-</span> m2[<span class="dv">15</span>,<span class="dv">5</span>]<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(m2, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Bayesian Probabilities"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(m2, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Bayesian Probabilities"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Bayesian Probabilities (continued below)</caption>
@@ -753,7 +763,7 @@ attr(,"status")
 </div>
 </div>
 <p>Interpretation: The numbers above can be interpreted as the probability of no association, direct association, or indirect association, which together sum to 1 (i.e., 100%). Both directly and indirectly associated phenotypes are associated with a given genotype, but indirectly associated phenotypes are conditionally independent of the genotype given the presence of a directly associated phenotype in the model.</p>
-<p>For example, in this synthetic data set, there is a suggested 100% probability that there is a direct association between rs1041740 and anxiety. In addition, while there is a 0% probability of no association between rs4135225 and sleep, the likelihood of direct vs.&nbsp;indirect effects is more split at 32.417% and 67.583%, respectively. While mvBIMBAM doesn’t inform of us what variable indirect associations are conditional on, we can look back at our bnlearn network for more information.</p>
+<p>For example, in this synthetic data set, there is a suggested 100% probability that there is a direct association between rs1041740 and anxiety. In addition, while there is a 0% probability of no association between rs4135225 and sleepiness, the likelihood of direct vs.&nbsp;indirect effects is more split at 32.417% and 67.583%, respectively. While mvBIMBAM doesn’t inform of us what variable indirect associations are conditional on, we can look back at our bnlearn network for more information.</p>
 </section>
 </section>
 <section id="save-data-and-results" class="level2" data-number="4.6">
@@ -762,13 +772,13 @@ attr(,"status")
 <section id="mvbimbam-bfs" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="mvbimbam-bfs"><span class="header-section-number">4.6.1</span> mvBIMBAM BFs</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(m1, m2, <span class="at">file =</span> <span class="st">"data/mvBimBam_Results.RDdata"</span>) <span class="do">###CUSTOMIZE** (optional, can change file name of results)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(m1, m2, <span class="at">file =</span> <span class="st">"data/mvBimBam_Results.RDdata"</span>) <span class="do">###CUSTOMIZE** (optional, can change file name of results)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="discussion" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="discussion"><span class="header-section-number">4.7</span> Discussion</h2>
-<p>Note that mvBIMBAM’s default priors are “loose” (the phrase used in the software documentation), meaning associations are detected more liberally. This aligns with our results, where mvBIMBAM identified rs7522705 as suggestively important to the network (1.5 &lt; BF &lt; 5), but none of the individual phenotypes themselves (BFs &lt; 1.5), while bnlearn omitted it completely. It’s worth mentioning that you can modify the default priors to be more conservative (see software documentation), but it is beyond the scope of this guide.</p>
+<p>Note that mvBIMBAM’s default priors are “loose” (the phrase used in the software documentation), meaning associations are detected more liberally. This aligns with our results, where mvBIMBAM identified rs7522705 as suggestively important to the network (1.5 &lt; BF &lt; 5), but none of the individual phenotypes themselves were even suggestive (e.g., all BFs &lt; 1.5), while bnlearn omitted it completely. It’s worth mentioning that you can modify the default priors to be more conservative (see software documentation), but this is beyond the scope of this guide.</p>
 </section>
 <section id="conclusion" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.8</span> Conclusion</h2>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Guide to Multivariate Bayesian Analyses in Nursing Research - 2&nbsp; Data preparation</title>
+<title>A tutorial to support multivariate Bayesian analyses in nursing research - 2&nbsp; Data preparation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Guide to Multivariate Bayesian Analyses in Nursing Research</a> 
+      <a href="./">A tutorial to support multivariate Bayesian analyses in nursing research</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -306,14 +306,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create expanded custom labels </span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>custom_labels2 <span class="ot">&lt;-</span> <span class="fu">c</span>(custom_labels, <span class="fu">setNames</span>(genes, genes))</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a mapping of node types (for bnlearn)</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>df_vertex_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.names =</span> <span class="fu">c</span>(trait_mapping, genes),</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Symptom"</span>, <span class="st">"Genotype"</span>), <span class="at">each =</span> <span class="fu">length</span>(traits)),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine traits and genes</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>vertex.names <span class="ot">&lt;-</span> <span class="fu">c</span>(traits, genes)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create type vector</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Symptom"</span>, <span class="fu">length</span>(traits)), <span class="fu">rep</span>(<span class="st">"Genotype"</span>, <span class="fu">length</span>(genes)))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataframe</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>df_vertex_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.names =</span> vertex.names,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> types,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Check that all variables are numeric or integer.</p>
+<p>Check that all variables are numeric or integer. NOTE: The code below assumes that all SNP names begin with “rs” and no trait names begin with “rs”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rs_columns <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^rs"</span>, <span class="fu">names</span>(df_synth), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>non_numeric_rs_columns <span class="ot">&lt;-</span> rs_columns[<span class="sc">!</span><span class="fu">sapply</span>(df_synth[rs_columns], is.numeric)]</span>
@@ -660,20 +666,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(genes), <span class="fu">all_of</span>(traits)) <span class="sc">%&gt;%</span> </span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>df_synth <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span> </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.vars =</span> <span class="fu">vars</span>(<span class="fu">starts_with</span>(<span class="st">"rs"</span>)),</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">.funs =</span> <span class="fu">list</span>(<span class="sc">~</span> <span class="fu">case_when</span>(</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"BB"</span>,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AB"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"AA"</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Genotype (G) and Phenotype (Y) matrices</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_i1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(genes)))</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note, if covariates have a unique pattern of missing data, df_i1 could </span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># be smaller/different than df_i1_regress. Printing number of rows in df_i1 to check</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dim</span>(df_i1)[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 763</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dim</span>(df_i1_regress)[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 763</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_synth <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.vars =</span> <span class="fu">vars</span>(<span class="fu">starts_with</span>(<span class="st">"rs"</span>)),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.funs =</span> <span class="fu">list</span>(<span class="sc">~</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"BB"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AB"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"AA"</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Genotype (G) and Phenotype (Y) matrices</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_i1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(genes)))</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     rs4880 rs5746136 rs1041740 rs10432782 rs4135225 rs7522705
 [1,]      1         0         1          1         1         1
@@ -683,8 +699,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [5,]      0         1         1          0         1         0
 [6,]      1         0         0          0         1         1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_i1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(traits)))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df_i1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(traits)))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     EMO_tscore bdito FAT_tscore paohcif EPSscore pain
 [1,]       47.8     8       46.9       0        5    0
@@ -699,42 +715,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="normalize-and-adjust-data-for-covariates" class="level3" data-number="2.3.6">
 <h3 data-number="2.3.6" class="anchored" data-anchor-id="normalize-and-adjust-data-for-covariates"><span class="header-section-number">2.3.6</span> Normalize and adjust data for covariates</h3>
-<p>In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the <code>f_quatile_norm_resid()</code> function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are order quantile-normalized.</p>
+<p>In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the <code>f_quatile_norm_resid()</code> function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are quantile-normalized.</p>
 <section id="create-adjustmentnormalization-functions" class="level4" data-number="2.3.6.1">
 <h4 data-number="2.3.6.1" class="anchored" data-anchor-id="create-adjustmentnormalization-functions"><span class="header-section-number">2.3.6.1</span> Create adjustment/normalization functions</h4>
 <p>We now create a function to perform residual adjustment for covariates (in this example, we are adjusting for age and race):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>f_quantile_norm_resid <span class="ot">&lt;-</span> <span class="cf">function</span>(Y, df) {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  {o <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">resid</span>(<span class="fu">lm</span>(x <span class="sc">~</span> age <span class="sc">+</span> race, <span class="at">data =</span> df)))} <span class="do">###CUSTOMIZE** (covariate names, replacing age and race)</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(o)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f_quantile_norm_resid <span class="ot">&lt;-</span> <span class="cf">function</span>(Y, df) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  {o <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">resid</span>(<span class="fu">lm</span>(x <span class="sc">~</span> age <span class="sc">+</span> race, <span class="at">data =</span> df)))} <span class="do">###CUSTOMIZE** (covariate names, replacing age and race)</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(o)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If adapting this code above for your own work, edit the <code>x ~ age + race</code> regression formula to adjust for covariates of interest, replacing <code>age</code> and <code>race</code> with your covariate variable names.</p>
 <p>We now create function to ‘super quantile normalize’ the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>f_quantile_normalize_adjust <span class="ot">&lt;-</span> <span class="cf">function</span>(Y, data, ...) {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Quantile normalize</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  Y_qn <span class="ot">&lt;-</span> <span class="fu">normalize.quantiles</span>(Y)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit Y ~ age + race, extra residual (using function created above)</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  Y_qn_resid <span class="ot">&lt;-</span> <span class="fu">f_quantile_norm_resid</span>(<span class="at">Y =</span> Y_qn, <span class="at">df =</span> data, ...) </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Quantile normalize the residual</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  Y_qn_resid_qn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">normalize.quantiles</span>(Y_qn_resid))</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(Y_qn_resid_qn)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>f_quantile_normalize_adjust <span class="ot">&lt;-</span> <span class="cf">function</span>(Y, data, ...) {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Quantile normalize</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  Y_qn <span class="ot">&lt;-</span> <span class="fu">normalize.quantiles</span>(Y)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit Y ~ age + race, extra residual (using function created above)</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  Y_qn_resid <span class="ot">&lt;-</span> <span class="fu">f_quantile_norm_resid</span>(<span class="at">Y =</span> Y_qn, <span class="at">df =</span> data, ...) </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Quantile normalize the residual</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  Y_qn_resid_qn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">normalize.quantiles</span>(Y_qn_resid))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(Y_qn_resid_qn)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="apply-functions-to-perform-normalization-and-covariate-adjustment" class="level4" data-number="2.3.6.2">
 <h4 data-number="2.3.6.2" class="anchored" data-anchor-id="apply-functions-to-perform-normalization-and-covariate-adjustment"><span class="header-section-number">2.3.6.2</span> Apply functions to perform normalization and covariate adjustment</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a quantile normalized adjusted Y data frame (i.e., quantile normalization </span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and covariate adjustment is performed in one fell swoop)</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>qn_resid_Y <span class="ot">&lt;-</span> <span class="fu">f_quantile_normalize_adjust</span>(Y, <span class="at">data =</span> df_i1_regress)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a copy of this data frame for use later in this workflow </span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>qn_resid_Y_b <span class="ot">&lt;-</span> qn_resid_Y </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the columns of the quantile normalized data frame to match the </span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotypes of interest  </span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(qn_resid_Y) <span class="ot">&lt;-</span> traits</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(qn_resid_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a quantile normalized adjusted Y data frame (i.e., quantile normalization </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and covariate adjustment is performed in one fell swoop)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>qn_resid_Y <span class="ot">&lt;-</span> <span class="fu">f_quantile_normalize_adjust</span>(Y, <span class="at">data =</span> df_i1_regress)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a copy of this data frame for use later in this workflow </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>qn_resid_Y_b <span class="ot">&lt;-</span> qn_resid_Y </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the columns of the quantile normalized data frame to match the </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotypes of interest  </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(qn_resid_Y) <span class="ot">&lt;-</span> traits</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(qn_resid_Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  EMO_tscore       bdito FAT_tscore   paohcif  EPSscore      pain
 1 -0.8851885  2.30362054  -3.330215 -5.645429 -3.414409 -6.012957
@@ -748,7 +764,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note: For one test user (DM), the above chunk threw the error:</p>
 <pre><code>Error in normalize.quantiles(Y) : 
 ERROR; return code from pthread_create() is 22</code></pre>
-<p>This issue was resolved by updating Rstudio to the latest version.</p>
+<p>This issue was resolved by updating RStudio to the latest version.</p>
 </section>
 </section>
 <section id="remove-outliers" class="level3" data-number="2.3.7">
@@ -757,50 +773,50 @@ ERROR; return code from pthread_create() is 22</code></pre>
 <section id="write-a-function-to-calculate-mahalanobis-distance" class="level4" data-number="2.3.7.1">
 <h4 data-number="2.3.7.1" class="anchored" data-anchor-id="write-a-function-to-calculate-mahalanobis-distance"><span class="header-section-number">2.3.7.1</span> Write a function to calculate Mahalanobis distance</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a function to calculate Mahalanobis distance</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>getMD <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  Sx <span class="ot">&lt;-</span> <span class="fu">cov</span>(x)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(x, <span class="fu">colMeans</span>(x), Sx)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(m)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a function to calculate Mahalanobis distance</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>getMD <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  Sx <span class="ot">&lt;-</span> <span class="fu">cov</span>(x)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(x, <span class="fu">colMeans</span>(x), Sx)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(m)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="apply-function-to-identify-outliers" class="level4" data-number="2.3.7.2">
 <h4 data-number="2.3.7.2" class="anchored" data-anchor-id="apply-function-to-identify-outliers"><span class="header-section-number">2.3.7.2</span> Apply function to identify outliers</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop individuals with data violating multivariate normality at alpha = 0.01</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>i_keep <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">pchisq</span>(<span class="fu">getMD</span>(qn_resid_Y_b), <span class="at">df =</span> <span class="fu">dim</span>(Y)[<span class="dv">2</span>]) <span class="sc">&gt;</span> <span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop individuals with data violating multivariate normality at alpha = 0.01</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>i_keep <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">pchisq</span>(<span class="fu">getMD</span>(qn_resid_Y_b), <span class="at">df =</span> <span class="fu">dim</span>(Y)[<span class="dv">2</span>]) <span class="sc">&gt;</span> <span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="create-a-summary" class="level3" data-number="2.3.8">
 <h3 data-number="2.3.8" class="anchored" data-anchor-id="create-a-summary"><span class="header-section-number">2.3.8</span> Create a summary</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Record sample sizes in a summary table</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">study=</span><span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1</span>),<span class="at">N.traits=</span><span class="cn">NA</span>,<span class="at">N.variants=</span><span class="cn">NA</span>,<span class="at">N.total=</span><span class="cn">NA</span>,<span class="at">n.complete=</span><span class="cn">NA</span>,<span class="at">n.used=</span><span class="cn">NA</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"study"</span>] <span class="ot">&lt;-</span> <span class="st">"Study Name"</span> <span class="do">###CUSTOMIZE** (study name)</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.total"</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df_synth)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"n.complete"</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(qn_resid_Y)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"n.used"</span>]  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(qn_resid_Y[i_keep, ])</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.traits"</span>] <span class="ot">&lt;-</span> <span class="fu">ncol</span>(qn_resid_Y)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.variants"</span>] <span class="ot">&lt;-</span> <span class="fu">length</span>(genes)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>table1[i,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Record sample sizes in a summary table</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">study=</span><span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1</span>),<span class="at">N.traits=</span><span class="cn">NA</span>,<span class="at">N.variants=</span><span class="cn">NA</span>,<span class="at">N.total=</span><span class="cn">NA</span>,<span class="at">n.complete=</span><span class="cn">NA</span>,<span class="at">n.used=</span><span class="cn">NA</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"study"</span>] <span class="ot">&lt;-</span> <span class="st">"Study Name"</span> <span class="do">###CUSTOMIZE** (study name)</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.total"</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df_synth)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"n.complete"</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(qn_resid_Y)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"n.used"</span>]  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(qn_resid_Y[i_keep, ])</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.traits"</span>] <span class="ot">&lt;-</span> <span class="fu">ncol</span>(qn_resid_Y)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>table1[i,<span class="st">"N.variants"</span>] <span class="ot">&lt;-</span> <span class="fu">length</span>(genes)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>table1[i,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       study N.traits N.variants N.total n.complete n.used
 1 Study Name        6          6     770        763    763</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print number of observations due to violation of multivariate normality </span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">dim</span>(Y)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">length</span>(i_keep), <span class="st">" Obs removed due to violation of MV-Normality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print number of observations due to violation of multivariate normality </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">dim</span>(Y)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">length</span>(i_keep), <span class="st">" Obs removed due to violation of MV-Normality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0  Obs removed due to violation of MV-Normality</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add to summary table</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>table1<span class="sc">$</span>n.removed <span class="ot">&lt;-</span> table1<span class="sc">$</span>N.total <span class="sc">-</span> table1<span class="sc">$</span>n.used</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>table1<span class="sc">$</span>percent.removed <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>table1<span class="sc">$</span>n.removed<span class="sc">/</span>table1<span class="sc">$</span>N.total,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add to summary table</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>table1<span class="sc">$</span>n.removed <span class="ot">&lt;-</span> table1<span class="sc">$</span>N.total <span class="sc">-</span> table1<span class="sc">$</span>n.used</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>table1<span class="sc">$</span>percent.removed <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>table1<span class="sc">$</span>n.removed<span class="sc">/</span>table1<span class="sc">$</span>N.total,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(table1,<span class="at">caption=</span><span class="st">"Sample sizes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(table1,<span class="at">caption=</span><span class="st">"Sample sizes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Sample sizes (continued below)</caption>
@@ -853,90 +869,91 @@ ERROR; return code from pthread_create() is 22</code></pre>
 </table>
 </div>
 </div>
+<p>Less than 1% of participants were removed in data processing.</p>
 </section>
 <section id="prepare-and-save-final-files" class="level3" data-number="2.3.9">
 <h3 data-number="2.3.9" class="anchored" data-anchor-id="prepare-and-save-final-files"><span class="header-section-number">2.3.9</span> Prepare and save final files</h3>
 <section id="data-used-in-both-programs" class="level4" data-number="2.3.9.1">
 <h4 data-number="2.3.9.1" class="anchored" data-anchor-id="data-used-in-both-programs"><span class="header-section-number">2.3.9.1</span> Data used in both programs</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for data directory; if not present, create it </span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"./data"</span>)) {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"./data"</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Write data </span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(traits, genes, trait_mapping, custom_labels, custom_labels2, df_vertex_table, <span class="at">file =</span> <span class="st">"./data/TraitsGenes.RData"</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for data directory; if not present, create it </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"./data"</span>)) {</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"./data"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Write data </span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(traits, genes, trait_mapping, custom_labels, custom_labels2, df_vertex_table, <span class="at">file =</span> <span class="st">"./data/TraitsGenes.RData"</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="mvbimbam" class="level4" data-number="2.3.9.2">
 <h4 data-number="2.3.9.2" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">2.3.9.2</span> mvBIMBAM</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write phenotypes to a text file for use in mvBIMBAM </span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"./inputs"</span>)) {</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"./inputs"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="fu">round</span>(qn_resid_Y[i_keep,], <span class="dv">8</span>), </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"./inputs/pheno_bimbam.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="do">###CUSTOMIZE** (optional, file name)</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names =</span> F, <span class="at">col.names =</span> F)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Refine genotype data for mvBIMBAM and write file</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>Geno_write <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(genes), <span class="fu">all_of</span>(traits)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(genes)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  {.[i_keep,]} <span class="co"># Apply i_keep matrix here to retain non-outlying participants</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Grep rs column numbers to create the geno_string file required for mvBIMBAM format</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>rs_cols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^rs"</span>, <span class="fu">colnames</span>(df_synth), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create geno_string format required for mvBIMBAM, filtering data set for only i_keep participants</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>Geno_String <span class="ot">&lt;-</span> <span class="fu">map</span>(rs_cols, <span class="sc">~</span> {</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  Geno_write <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(.x), <span class="fu">all_of</span>(traits)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(.x))<span class="sc">%&gt;%</span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    {.[i_keep,]}</span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creating the Geno_String for each SNP rsID  </span></span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">unlist</span>(<span class="fu">c</span>(Geno_write)), <span class="at">collapse =</span> <span class="st">","</span>)</span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>  Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(.x, <span class="st">","</span>, Geno_String)</span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>  Geno_String</span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>}) </span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Polish geno_string for mvBIMBAM</span></span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>final_Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">unlist</span>(Geno_String), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unlist</span>(<span class="fu">strsplit</span>(Geno_String[[<span class="dv">1</span>]], <span class="st">","</span>))) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(Geno_String)</span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>final_Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(M, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, N, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, final_Geno_String)</span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Write it out </span></span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(final_Geno_String, <span class="at">con =</span> <span class="st">"./inputs/geno_bimbam.txt"</span>, <span class="at">sep =</span> <span class="st">""</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write phenotypes to a text file for use in mvBIMBAM </span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"./inputs"</span>)) {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"./inputs"</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="fu">round</span>(qn_resid_Y[i_keep,], <span class="dv">8</span>), </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"./inputs/pheno_bimbam.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="do">###CUSTOMIZE** (optional, file name)</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names =</span> F, <span class="at">col.names =</span> F)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Refine genotype data for mvBIMBAM and write file</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>Geno_write <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(genes), <span class="fu">all_of</span>(traits)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(genes)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  {.[i_keep,]} <span class="co"># Apply i_keep matrix here to retain non-outlying participants</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Grep rs column numbers to create the geno_string file required for mvBIMBAM format</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>rs_cols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^rs"</span>, <span class="fu">colnames</span>(df_synth), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create geno_string format required for mvBIMBAM, filtering data set for only i_keep participants</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>Geno_String <span class="ot">&lt;-</span> <span class="fu">map</span>(rs_cols, <span class="sc">~</span> {</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  Geno_write <span class="ot">&lt;-</span> df_synth <span class="sc">%&gt;%</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(.x), <span class="fu">all_of</span>(traits)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(.x))<span class="sc">%&gt;%</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>    {.[i_keep,]}</span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creating the Geno_String for each SNP rsID  </span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">unlist</span>(<span class="fu">c</span>(Geno_write)), <span class="at">collapse =</span> <span class="st">","</span>)</span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>  Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(.x, <span class="st">","</span>, Geno_String)</span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  Geno_String</span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>}) </span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Polish geno_string for mvBIMBAM</span></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>final_Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">unlist</span>(Geno_String), <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unlist</span>(<span class="fu">strsplit</span>(Geno_String[[<span class="dv">1</span>]], <span class="st">","</span>))) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(Geno_String)</span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a>final_Geno_String <span class="ot">&lt;-</span> <span class="fu">paste0</span>(M, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, N, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, final_Geno_String)</span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Write it out </span></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(final_Geno_String, <span class="at">con =</span> <span class="st">"./inputs/geno_bimbam.txt"</span>, <span class="at">sep =</span> <span class="st">""</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="bnlearn" class="level4" data-number="2.3.9.3">
 <h4 data-number="2.3.9.3" class="anchored" data-anchor-id="bnlearn"><span class="header-section-number">2.3.9.3</span> bnlearn</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Curate bnlearn data (convert AA/BB coding back to additive) </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Geno_write2 <span class="ot">&lt;-</span> Geno_write <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.vars =</span> <span class="fu">vars</span>(<span class="fu">starts_with</span>(<span class="st">"rs"</span>)),</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.funs =</span> <span class="fu">list</span>(<span class="sc">~</span> <span class="fu">case_when</span>(</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span>  <span class="st">"BB"</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="st">"AB"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span>  <span class="st">"AA"</span> <span class="sc">~</span> <span class="dv">0</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create merged data frame</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>bnlearn_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Geno_write2, <span class="fu">round</span>(qn_resid_Y[i_keep,], <span class="dv">8</span>))</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co"># The package to learn the Bayesian networks (bnlearn) does not support integer data,</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co"># so convert integer columns to numeric</span></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>bnlearn_data[<span class="fu">sapply</span>(bnlearn_data, class) <span class="sc">==</span> <span class="st">"integer"</span>] <span class="ot">&lt;-</span> </span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(bnlearn_data[<span class="fu">sapply</span>(bnlearn_data, class) <span class="sc">==</span> <span class="st">"integer"</span>], as.numeric)</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Write data for bnlearn</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(bnlearn_data, <span class="at">file =</span> <span class="st">"data/QuantNorm.rds"</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Curate bnlearn data (convert AA/BB coding back to additive) </span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Geno_write2 <span class="ot">&lt;-</span> Geno_write <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.vars =</span> <span class="fu">vars</span>(<span class="fu">starts_with</span>(<span class="st">"rs"</span>)),</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.funs =</span> <span class="fu">list</span>(<span class="sc">~</span> <span class="fu">case_when</span>(</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span>  <span class="st">"BB"</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span> <span class="st">"AB"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>      . <span class="sc">==</span>  <span class="st">"AA"</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create merged data frame</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>bnlearn_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Geno_write2, <span class="fu">round</span>(qn_resid_Y[i_keep,], <span class="dv">8</span>))</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># The package to learn the Bayesian networks (bnlearn) does not support integer data,</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co"># so convert integer columns to numeric</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>bnlearn_data[<span class="fu">sapply</span>(bnlearn_data, class) <span class="sc">==</span> <span class="st">"integer"</span>] <span class="ot">&lt;-</span> </span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(bnlearn_data[<span class="fu">sapply</span>(bnlearn_data, class) <span class="sc">==</span> <span class="st">"integer"</span>], as.numeric)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Write data for bnlearn</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(bnlearn_data, <span class="at">file =</span> <span class="st">"data/QuantNorm.rds"</span>) <span class="do">###CUSTOMIZE** (optional, file name)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

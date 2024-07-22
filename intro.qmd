@@ -4,11 +4,11 @@
 
 This tutorial will focus on the application of two multivariate Bayesian software programs: (1) `bnlearn` and (2) `mvBIMBAM`.
 
-**Approach 1:** `bnlearn` - bnlearn is an R package for learning the graphical structure of Bayesian networks, estimating their parameters, and performing some useful inference as described in:
+**Approach 1:** `bnlearn` - bnlearn is an R package for learning the graphical structure of Bayesian networks, estimating their parameters, and performing some useful inference as described in/at:
 
 Scutari M, Howell P, Balding DJ, Mackay I. Multiple Quantitative Trait Analysis Using Bayesian Networks. Genetics. 2014 Apr 11;198(1):129--137. PMID: 25236454 PMCID: PMC4174925 DOI: https://doi.org/10.1534/genetics.114.165704
 
-and at:
+Zhang JZ*, Heinsberg LW*, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232. \*First authors.
 
 [www.bnlearn.com](https://www.bnlearn.com/)
 
@@ -22,7 +22,7 @@ Stephens M. A unified framework for association analysis with multiple related p
 
 Additional details about the method and its interpretation can be found in the [mvBIMBAM chapter](./mvbimbam.qmd) of this book or in `02_mvNUR_mvBIMBAM.Rmd` in the [GitHub repository](https://github.com/lwheinsberg/mvNUR).
 
-Note that while `bnlearn` is run directly in R, `mvBIMBAM` is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix. Some great introductory R/Unix resources are listed at the end of this document.
+Note that while `bnlearn` is run directly in R, `mvBIMBAM` is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix.
 
 Finally, note that, throughout all markdowns, we have flagged lines that will need to be modified by the user if adapting this code for your own data using `###CUSTOMIZE**` annotation.
 
@@ -48,13 +48,13 @@ Check your R version if you are having any issues installing. As of October 2023
 
 mvBIMBAM is designed to be installed from the [mvBIMBAM GitHub respository](https://github.com/heejungshim/mvBIMBAM). The binary executable file for Linux is in the `https://github.com/heejungshim/mvBIMBAM/bin/` directory while a zip file of the binary executable file, source code, and example input files for Mac is in `https://github.com/heejungshim/mvBIMBAM/forMAC` directory. NOTE: The software executable is called 'bimbam', but we refer to the program as 'mvBIMBAM' throughout.
 
-HOWEVER, when developing/testing this tutorial, several of us ran into installation issues for Mac. Ultimately, we had to modify the program's makefile to support installation. We have alerted the mvBIMABM software maintainer of this issue, but have not seen it resolved. As such, we provide a modified Mac download to make this process easier for users of this tutorial (allowable under GNU General Public License (GPLv3+)).
+HOWEVER, when developing/testing this tutorial, several of us ran into installation issues for Mac. Ultimately, we had to modify the program's makefile to enable successful installation. We have alerted the mvBIMABM software maintainer of this issue, but have not yet seen it resolved. As such, we provide a modified Mac source code download to make this process easier for users of this tutorial (allowable under GNU General Public License (GPLv3+)).
 
-To install mvBIMBAM, please follow the instructions below, which were written with the assumption that users have an introductory understanding of navigating a computer using the terminal/Unix commands. If new to Unix navigation via the terminal, please visit this [how to guide](https://macpaw.com/how-to/use-terminal-on-mac) for a brief introduction.
+To install mvBIMBAM, please follow the instructions below, which were written with the assumption that users have an introductory understanding of navigating a computer using the terminal/Unix commands. If you are new to using Unix commands in the terminal, please visit this [how to guide](https://macpaw.com/how-to/use-terminal-on-mac) for a brief introduction.
 
 #### Mac
 
-(1) Download [`BIMBAM_multi_pheno_MAC_M1_modified.zip`](https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_M1_modified.zip) or [`BIMBAM_multi_pheno_MAC_Intel_modified.zip`](https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_Intel_modified.zip) from our [GitHub repository](https://github.com/lwheinsberg/mvNUR). The former is for newer Apple silicon/M1 macs and the latter is for older macs. If you are not sure which Mac you have, you can click on the apple symbol in the upper left corner of your machine. If you have an Apple silicon, the Chip will be listed as Apple M1 or M2. If you have the Apple Intel, you will see the processor listed as Intel Core i5, i7, or similar.
+(1) Download [`BIMBAM_multi_pheno_MAC_M1_modified.zip`](https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_M1_modified.zip) or [`BIMBAM_multi_pheno_MAC_Intel_modified.zip`](https://github.com/lwheinsberg/mvNUR/blob/main/BIMBAM_multi_pheno_MAC_Intel_modified.zip) from our [GitHub repository](https://github.com/lwheinsberg/mvNUR). The former is for newer Apple silicon/M1 macs and the latter is for older macs. If you are not sure which Mac you have, you can click on the apple symbol in the upper left corner of your machine and choose the "About This Mac". If you have an Apple silicon machine, the chip will be listed as Apple M1 or M2. If you have the Apple Intel, you will see the processor listed as Intel Core i5, i7, or similar.
 
 (2) Unzip the file by double clicking the zipped folder.
 
@@ -118,13 +118,13 @@ If you are interested in more details related to the installation issue, and how
 
 ##### Troubleshooting
 
-Note that you need to have GSL (GNU Scientific Library) installed on your machine before you can install mvBIMBAM. GSL is an open-source software library that provides a wide range of mathematical and statistical functions for scientific and numerical computing. Please see our [troubleshooting](./Troubleshooting.qmd) appendix of this book or [Installation Appendix](https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix) of the GitHub repository for tips on getting GSL installed on your machine.
+Note that you need to have command line tools and GSL (GNU Scientific Library) installed on your machine before you can install mvBIMBAM. Please see our [troubleshooting](./Troubleshooting.qmd) appendix of this book or [Installation Appendix](https://github.com/lwheinsberg/mvNUR/tree/main/InstallationAppendix) of the GitHub repository for tips on getting GSL installed on your machine.
 
 ## Synthetic data set overview
 
 To facilitate hands-on learning, a synthetic data set was created for use with this example code. The synthetic data set was created from a study of women with breast cancer (BrCa). This data set contains no real data, but mimics the correlation structure of the true data set. The original data set contained data for 110 participants and included data for 6 symptoms, 3 demographic variables, and 6 SNPs. We created a synthetic version of this data set with fake data for 770 participants for use in this tutorial.
 
-Data set name: [`BrCa_synthetic.csv`](BrCa_synthetic.csv) (see [GitHub repository](https://github.com/lwheinsberg/mvNUR/tree/main/data ) for details).
+Data set name: [`BrCa_synthetic.csv`](BrCa_synthetic.csv) (see [GitHub repository](https://github.com/lwheinsberg/mvNUR/tree/main/data) for details).
 
 Variable descriptions:
 
