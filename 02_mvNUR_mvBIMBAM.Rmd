@@ -39,7 +39,7 @@ Note this code is dependent upon `00_mvNUR_DataPrep.Rmd` which creates the mvBIM
 
 ## mvBIMBAM
 
-mvBIMBAM is a command line program for multivariate genetic association analysis of multiple related phenotypes. In the mvBIMBAM framework, a global null model representing no association between phenotypes and genotypes is compared with an exhaustive combination of alternative models in which all different combinations of phenotype-genotype associations are considered (see the `mph 2` analysis setting parameter details below). For the alternative models, the mvBIMBAM methodology splits phenotype-genotype associations into all possible partitions of U, D, and I, each representing 'unassociated', 'directly', and 'indirectly' associated. Details about the analyses and interpretation can be found below. Installation and troubleshooting instructions can be found in the README file.
+mvBIMBAM is a command line program for multivariate genetic association analysis of multiple related phenotypes. In the mvBIMBAM framework, a global null model representing no association between phenotypes and genotypes is compared with an exhaustive combination of alternative models in which all different combinations of phenotype-genotype associations are considered (see the `mph 2` analysis setting parameter details below). For the alternative models, the mvBIMBAM methodology splits phenotype-genotype associations into all possible partitions of U, D, and I, each representing 'unassociated', 'directly', and 'indirectly' associated. Details about the analyses and interpretation can be found below. Installation and troubleshooting instructions can be found in the README file (distributed as permitted under the creators original GPL-3 license). 
 
 NOTE: The software executable is called 'bimbam', but we refer to the program as 'mvBIMBAM' throughout.
 
@@ -79,13 +79,12 @@ genes <- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs752
 
 We will now apply mvBIMBAM to the synthetic data set we are working with. Rather than navigating the analyses in the terminal, we can make our code reproducible in R and call mvBIMBAM through the R using `call system()`. More information about the program can be found under the original [mvBIMBAM documentation](https://github.com/heejungshim/mvBIMBAM/blob/master/doc/mvBIMBAM_Manual.pdf) on GitHub. In brief, the command we need contains the following parameters:
 
--g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt)                     
--p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt)                   
--o: prefix for output files (for our example we will use: bimbam_out) 
--f: number of phenotypes to analyze (length(traits), for our example this number is 6)      
--A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)          
--mph 1 vs. mph 2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph 2)               
--r: random seed for reproducibility of results\*\*            
+-g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt)\
+-p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt)\
+-o: prefix for output files (for our example we will use: bimbam_out) -f: number of phenotypes to analyze (length(traits), for our example this number is 6)\
+-A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)\
+-mph 1 vs. mph 2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph 2)\
+-r: random seed for reproducibility of results\*\*
 
 \*\*Random seed: The mvBIMBAM article states: "We maximized the likelihood using an EM algorithm; four independent runs of the algorithm from different starting points produced essentially identical results." This appears to be implemented in a random way, and so depends on the random number seed. For the purposes of this tutorial, we set a seed number so that the results would be identical each time. In practice, this step is not necessary, so the "-r 5254" section can be deleted from the code below.
 
@@ -204,7 +203,7 @@ Note that mvBIMBAM's default priors are "loose" (the phrase used in the software
 
 # Conclusion
 
-And with that, we conclude our `mvBIMBAM` tutorial! We hope that this code is documented in enough detail so that you can easily adapt it for your own projects, but feel free to reach out with any questions! 
+And with that, we conclude our `mvBIMBAM` tutorial! We hope that this code is documented in enough detail so that you can easily adapt it for your own projects, but feel free to reach out with any questions!
 
 # Session information
 

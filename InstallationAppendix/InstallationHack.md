@@ -13,8 +13,9 @@ Copyright 2024, University of Pittsburgh. All Rights Reserved. License:
 
 ## Mac
 
-The motiviation behind modifying the makefile was that during
-installation, test users were getting the following error:
+The motivation behind modifying the makefile was that during
+installation (of mvBIMBAM “first release”), test users were getting the
+following error:
 
     cd src && /Applications/Xcode.app/Contents/Developer/usr/bin/make
     g++ -static-libgcc -DIMPUTATION   -O3 control.o fpmath.o indiv.o diploid.o haploid.o model.o param.o  fp.o -lm libgsl.a libgslcblas.a  -o bimbam
@@ -36,6 +37,10 @@ can click on the apple symbol in the upper left corner of your machine.
 If you have an Apple silicon, the Chip will be listed as Apple M1 or M2.
 If you have the Apple Intel, you will see the processor listed as Intel
 Core i5, i7, or similar.
+
+Note that this modified makefile and redistribution of mvBIMBAM software
+is redistributed as permitted under the creator’s original GPL-3
+license.
 
 ### APPLE INTEL INSTRUCTIONS
 
@@ -136,30 +141,30 @@ sessioninfo::session_info()
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value
     ##  version  R version 4.2.1 (2022-06-23)
-    ##  os       macOS Ventura 13.4
+    ##  os       macOS 14.3.1
     ##  system   aarch64, darwin20
     ##  ui       X11
     ##  language (EN)
     ##  collate  en_US.UTF-8
     ##  ctype    en_US.UTF-8
-    ##  tz       America/New_York
-    ##  date     2023-12-22
+    ##  tz       America/Toronto
+    ##  date     2024-07-22
     ##  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date (UTC) lib source
-    ##  cli           3.6.1   2023-03-23 [1] CRAN (R 4.2.0)
-    ##  digest        0.6.31  2022-12-11 [1] CRAN (R 4.2.0)
-    ##  evaluate      0.20    2023-01-17 [1] CRAN (R 4.2.0)
-    ##  fastmap       1.1.1   2023-02-24 [1] CRAN (R 4.2.0)
-    ##  htmltools     0.5.5   2023-03-23 [1] CRAN (R 4.2.0)
-    ##  knitr       * 1.42    2023-01-25 [1] CRAN (R 4.2.1)
-    ##  rlang         1.1.0   2023-03-14 [1] CRAN (R 4.2.0)
-    ##  rmarkdown     2.21    2023-03-26 [1] CRAN (R 4.2.0)
-    ##  rstudioapi    0.14    2022-08-22 [1] CRAN (R 4.2.0)
+    ##  cli           3.6.2   2023-12-11 [1] CRAN (R 4.2.3)
+    ##  digest        0.6.35  2024-03-11 [1] CRAN (R 4.2.3)
+    ##  evaluate      0.23    2023-11-01 [1] CRAN (R 4.2.0)
+    ##  fastmap       1.2.0   2024-05-15 [1] CRAN (R 4.2.3)
+    ##  htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.2.3)
+    ##  knitr       * 1.46    2024-04-06 [1] CRAN (R 4.2.1)
+    ##  rlang         1.1.3   2024-01-10 [1] CRAN (R 4.2.3)
+    ##  rmarkdown     2.27    2024-05-17 [1] CRAN (R 4.2.3)
+    ##  rstudioapi    0.16.0  2024-03-24 [1] CRAN (R 4.2.3)
     ##  sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.2.0)
-    ##  xfun          0.38    2023-03-24 [1] CRAN (R 4.2.0)
-    ##  yaml          2.3.7   2023-01-23 [1] CRAN (R 4.2.1)
+    ##  xfun          0.44    2024-05-15 [1] CRAN (R 4.2.3)
+    ##  yaml          2.3.8   2023-12-11 [1] CRAN (R 4.2.3)
     ## 
     ##  [1] /Users/law145/Library/R/arm64/4.2/library
     ##  [2] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
