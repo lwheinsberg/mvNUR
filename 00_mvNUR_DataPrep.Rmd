@@ -75,15 +75,23 @@ genes <- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs752
 # Create expanded custom labels 
 custom_labels2 <- c(custom_labels, setNames(genes, genes))
 
-# Create a mapping of node types (for bnlearn)
+# Combine traits and genes
+vertex.names <- c(traits, genes)
+
+# Create type vector
+types <- c(rep("Symptom", length(traits)), rep("Genotype", length(genes)))
+
+# Create the dataframe
 df_vertex_table <- data.frame(
-  vertex.names = c(trait_mapping, genes),
-  type = rep(c("Symptom", "Genotype"), each = length(traits)),
+  vertex.names = vertex.names,
+  type = types,
   stringsAsFactors = FALSE
 )
 ```
 
 Check that all variables are numeric or integer.
+
+*Note*, the code below assumes that all SNP names begin with "rs" and no trait names begin with "rs".
 
 ```{r}
 rs_columns <- grep("^rs", names(df_synth), value = TRUE)
@@ -164,6 +172,11 @@ df_i1 <- df_i1_regress %>%
   select(all_of(genes), all_of(traits)) %>% 
   filter(complete.cases(.))
 
+# Note, if covariates have a unique pattern of missing data, df_i1 could 
+# be smaller/different than df_i1_regress. Printing number of rows in df_i1 to check
+print(dim(df_i1)[1])
+print(dim(df_i1_regress)[1])
+
 # Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM 
 df_synth <- df_synth %>% 
   mutate_at(
@@ -186,7 +199,7 @@ There are `r n` participants with complete data that we will retain for our anal
 
 ## Normalize and adjust data for covariates
 
-In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the `f_quatile_norm_resid()` function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are order quantile-normalized.
+In this example, we are adjusting our phenotypes of interest for the covariates age and race using ordinary linear regression models. If adapting this code for your own work, manually edit the covariate names in the `f_quatile_norm_resid()` function. Note that the sensitivity of the Bayesian multivariate mvBIMBAM framework to outlier values and non-normality also necessitates the normalization of phenotypes. As shown below, residualized phenotypes (i.e., adjusted for age/race) are quantile-normalized.
 
 ### Create adjustment/normalization functions
 
@@ -236,7 +249,7 @@ Error in normalize.quantiles(Y) :
 ERROR; return code from pthread_create() is 22
 ```
 
-This issue was resolved by updating Rstudio to the latest version.
+In troubleshooting, this issue was resolved by updating RStudio to the latest version.
 
 ## Remove outliers
 

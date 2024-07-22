@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Tutorial: Multivariate Bayesian Analyses in Nursing
+  Research
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Lacey W
+    family-names: Heinsberg
+    email: law145@pitt.edu
+    affiliation: University of Pittsburgh
+    orcid: 'https://orcid.org/0000-0002-7690-5485'
+  - given-names: Daniel E
+    family-names: Weeks
+    email: weeks@pitt.edu
+    affiliation: University of Pittsburgh
+    orcid: 'https://orcid.org/0000-0001-9410-7228'
+identifiers:
+  - type: url
+    value: 'https://lwheinsberg.github.io/mvNUR/'
+repository-code: 'https://github.com/lwheinsberg/mvNUR'
+abstract: >-
+  A practical guide for conducting multivariate Bayesian
+  analyses (bnlearn and mvBIMBAM) for analyzing correlated
+  phenotypes in nursing research.
+license: GPL-2.0

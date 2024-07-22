@@ -98,15 +98,24 @@ genes <- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs752
 # Create expanded custom labels 
 custom_labels2 <- c(custom_labels, setNames(genes, genes))
 
-# Create a mapping of node types (for bnlearn)
+# Combine traits and genes
+vertex.names <- c(traits, genes)
+
+# Create type vector
+types <- c(rep("Symptom", length(traits)), rep("Genotype", length(genes)))
+
+# Create the dataframe
 df_vertex_table <- data.frame(
-  vertex.names = c(trait_mapping, genes),
-  type = rep(c("Symptom", "Genotype"), each = length(traits)),
+  vertex.names = vertex.names,
+  type = types,
   stringsAsFactors = FALSE
 )
 ```
 
 Check that all variables are numeric or integer.
+
+*Note*, the code below assumes that all SNP names begin with “rs” and no
+trait names begin with “rs”.
 
 ``` r
 rs_columns <- grep("^rs", names(df_synth), value = TRUE)
@@ -264,6 +273,20 @@ df_i1 <- df_i1_regress %>%
   select(all_of(genes), all_of(traits)) %>% 
   filter(complete.cases(.))
 
+# Note, if covariates have a unique pattern of missing data, df_i1 could 
+# be smaller/different than df_i1_regress. Printing number of rows in df_i1 to check
+print(dim(df_i1)[1])
+```
+
+    ## [1] 763
+
+``` r
+print(dim(df_i1_regress)[1])
+```
+
+    ## [1] 763
+
+``` r
 # Recode 0, 1, 2 genotypes to AA, AB, BB for later use in mvBIMBAM 
 df_synth <- df_synth %>% 
   mutate_at(
@@ -313,7 +336,7 @@ in the `f_quatile_norm_resid()` function. Note that the sensitivity of
 the Bayesian multivariate mvBIMBAM framework to outlier values and
 non-normality also necessitates the normalization of phenotypes. As
 shown below, residualized phenotypes (i.e., adjusted for age/race) are
-order quantile-normalized.
+quantile-normalized.
 
 ### Create adjustment/normalization functions
 
@@ -372,7 +395,8 @@ Note: For one test user (DM), the above chunk threw the error:
     Error in normalize.quantiles(Y) : 
     ERROR; return code from pthread_create() is 22
 
-This issue was resolved by updating Rstudio to the latest version.
+In troubleshooting, this issue was resolved by updating RStudio to the
+latest version.
 
 ## Remove outliers
 
@@ -550,18 +574,18 @@ sessionInfo()
     ## 
     ## other attached packages:
     ##  [1] corrplot_0.92         preprocessCore_1.60.2 pander_0.6.5         
-    ##  [4] lubridate_1.9.2       forcats_1.0.0         stringr_1.5.0        
-    ##  [7] dplyr_1.1.2           purrr_1.0.1           readr_2.1.4          
-    ## [10] tidyr_1.3.0           tibble_3.2.1          ggplot2_3.4.2        
-    ## [13] tidyverse_2.0.0       knitr_1.42           
+    ##  [4] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.1        
+    ##  [7] dplyr_1.1.4           purrr_1.0.2           readr_2.1.5          
+    ## [10] tidyr_1.3.1           tibble_3.2.1          ggplot2_3.5.1        
+    ## [13] tidyverse_2.0.0       knitr_1.46           
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.10      highr_0.10       pillar_1.9.0     compiler_4.2.1  
-    ##  [5] tools_4.2.1      digest_0.6.31    timechange_0.2.0 evaluate_0.20   
-    ##  [9] lifecycle_1.0.3  gtable_0.3.3     pkgconfig_2.0.3  rlang_1.1.0     
-    ## [13] cli_3.6.1        rstudioapi_0.14  yaml_2.3.7       xfun_0.38       
-    ## [17] fastmap_1.1.1    withr_2.5.0      generics_0.1.3   vctrs_0.6.1     
-    ## [21] hms_1.1.3        grid_4.2.1       tidyselect_1.2.0 glue_1.6.2      
-    ## [25] R6_2.5.1         fansi_1.0.4      rmarkdown_2.21   tzdb_0.3.0      
-    ## [29] magrittr_2.0.3   scales_1.2.1     htmltools_0.5.5  colorspace_2.1-0
-    ## [33] utf8_1.2.3       stringi_1.7.12   munsell_0.5.0
+    ##  [1] Rcpp_1.0.12       highr_0.10        pillar_1.9.0      compiler_4.2.1   
+    ##  [5] tools_4.2.1       digest_0.6.35     timechange_0.3.0  evaluate_0.23    
+    ##  [9] lifecycle_1.0.4   gtable_0.3.5      pkgconfig_2.0.3   rlang_1.1.3      
+    ## [13] cli_3.6.2         rstudioapi_0.16.0 yaml_2.3.8        xfun_0.44        
+    ## [17] fastmap_1.2.0     withr_3.0.0       generics_0.1.3    vctrs_0.6.5      
+    ## [21] hms_1.1.3         grid_4.2.1        tidyselect_1.2.1  glue_1.7.0       
+    ## [25] R6_2.5.1          fansi_1.0.6       rmarkdown_2.27    tzdb_0.4.0       
+    ## [29] magrittr_2.0.3    scales_1.3.0      htmltools_0.5.8.1 colorspace_2.1-0 
+    ## [33] utf8_1.2.4        stringi_1.8.4     munsell_0.5.1
