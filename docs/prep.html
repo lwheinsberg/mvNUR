@@ -245,20 +245,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">2.1</span> Overview</h2>
-<p>A fully synthetic example data set has been created to accompany this repository so that we can freely and safely document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh (PI: Bender) focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study (PI: Davis) collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants.</p>
+<p>A fully synthetic example data set has been created to accompany this repository so that we can freely and safely document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh (PI: Dr.&nbsp;Cathy Bender) focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study (PI: Dr.&nbsp;Tara Davis) collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants.</p>
 </section>
 <section id="load-libraries" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="load-libraries"><span class="header-section-number">2.2</span> Load libraries</h2>
-<p>Load the libraries needed to run the code.</p>
+<p>Install and/or load the libraries needed to run the code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="do">## Data wrangling </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander) <span class="do">## Table formatting </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(preprocessCore) <span class="do">## Preprocessing functions</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!require("BiocManager", quietly = TRUE))</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    install.packages("BiocManager") ## Facilitate installation of preprocessCore</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("preprocessCore") </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: `preprocessCore` isn't available for R version 4.3.1, but can be installed using `biocManager` https://bioconductor.org/packages/release/bioc/html/preprocessCore.html</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) <span class="do">## Visualize correlation matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander) </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(preprocessCore) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="prepare-data-for-multivariate-analyses" class="level2" data-number="2.3">
@@ -317,7 +313,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.names =</span> vertex.names,</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> types,</span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace vertex.names with the corresponding custom labels</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>df_vertex_table<span class="sc">$</span>vertex.names <span class="ot">&lt;-</span> custom_labels2[<span class="fu">match</span>(df_vertex_table<span class="sc">$</span>vertex.names, <span class="fu">names</span>(custom_labels2))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check that all variables are numeric or integer. NOTE: The code below assumes that all SNP names begin with “rs” and no trait names begin with “rs”.</p>
 <div class="cell">

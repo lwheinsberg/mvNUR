@@ -24,23 +24,14 @@ The R package `bnlearn` is helpful for learning the graphical structure of Bayes
 
 ## Load Libraries
 
-```{r load_libraries1,message=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(tidyverse) 
 library(lme4)      
 library(bnlearn)  
 library(parallel)  
-# The 'graph' package is a Bioconductor package
-# One of our tutorial test users had trouble installing graph and Rgraphviz packages and had to force install as shown below
-#if (!require("BiocManager", quietly = TRUE))
-#    install.packages("BiocManager")
-#BiocManager::install("graph", force = TRUE)
 library(graph)     
 library(pander)   
 library(ggnetwork)
-# The 'Rgraphviz' is a Bioconductor packaage
-#if (!require("BiocManager", quietly = TRUE))
-#    install.packages("BiocManager")
-#BiocManager::install("Rgraphviz", force = TRUE)
 library(Rgraphviz)  
 ```
 

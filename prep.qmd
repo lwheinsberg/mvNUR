@@ -2,21 +2,17 @@
 
 ## Overview
 
-A fully synthetic example data set has been created to accompany this repository so that we can freely and safely document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh (PI: Bender) focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study (PI: Davis) collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants.
+A fully synthetic example data set has been created to accompany this repository so that we can freely and safely document the analytical steps and interpretation related to our two exemplar multivariate Bayesian approaches. The real data from which the synthetic data were generated were collected via a nurse-led study from the University of Pittsburgh (PI: Dr. Cathy Bender) focused on individuals with breast cancer. The study collected extensive data related to symptoms, and a sub-study (PI: Dr. Tara Davis) collected candidate gene single nucleotide polymorphism (SNP) data. Candidate symptoms selected for inclusion in this tutorial included anxiety, depression, fatigue, daytime sleepiness, cognitive function, and pain. Candidate SNPs selected for examination in this study included rs4880, rs5746136, rs1041740, rs10432782, rs4135225, and rs7522705. The original data set consisted of 110 participants. For the purposes of our examples, a larger, synthetic data set mirroring the statistical properties of the original data set was created. The data set contains 770 participants.
 
 ## Load libraries
 
-Load the libraries needed to run the code.
+Install and/or load the libraries needed to run the code.
 
 ```{r load_libraries2, message=FALSE, warning=FALSE}
-library(tidyverse) ## Data wrangling 
-library(pander) ## Table formatting 
-library(preprocessCore) ## Preprocessing functions
-#if (!require("BiocManager", quietly = TRUE))
-#    install.packages("BiocManager") ## Facilitate installation of preprocessCore
-#BiocManager::install("preprocessCore") 
-# Note: `preprocessCore` isn't available for R version 4.3.1, but can be installed using `biocManager` https://bioconductor.org/packages/release/bioc/html/preprocessCore.html
-library(corrplot) ## Visualize correlation matrix
+library(tidyverse) 
+library(pander) 
+library(preprocessCore) 
+library(corrplot) 
 ```
 
 ## Prepare data for multivariate analyses
@@ -60,6 +56,9 @@ df_vertex_table <- data.frame(
   type = types,
   stringsAsFactors = FALSE
 )
+
+# Replace vertex.names with the corresponding custom labels
+df_vertex_table$vertex.names <- custom_labels2[match(df_vertex_table$vertex.names, names(custom_labels2))]
 ```
 
 Check that all variables are numeric or integer. NOTE: The code below assumes that all SNP names begin with "rs" and no trait names begin with "rs".

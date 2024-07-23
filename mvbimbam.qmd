@@ -57,7 +57,8 @@ We will now apply mvBIMBAM to the synthetic data set we are working with. Rather
 -g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt)\
 -p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt)\
 -o: prefix for output files (for our example we will use: bimbam_out)\
--f: number of phenotypes to analyze (length(traits), for our example this number is 6) -A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)\
+-f: number of phenotypes to analyze (length(traits), for our example this number is 6)\
+-A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)\
 -mph 1 vs. mph 2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph 2)\
 -r: random seed for reproducibility of results\*\*
 

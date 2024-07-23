@@ -304,7 +304,8 @@ genes &lt;- c("rs4880", "rs5746136", "rs1041740", "rs10432782", "rs4135225", "rs
 <p>-g: location of the genotype data (for our example the location is: ./inputs/geno_bimbam.txt)<br>
 -p: location of the phenotype data (for our example the location is: ./inputs/pheno_bimbam.txt)<br>
 -o: prefix for output files (for our example we will use: bimbam_out)<br>
--f: number of phenotypes to analyze (length(traits), for our example this number is 6) -A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)<br>
+-f: number of phenotypes to analyze (length(traits), for our example this number is 6)<br>
+-A: indicate multiple values for sigma (see mvBIMBAM manual for more details; for our example we will use a range of values from 0.05 to 0.4)<br>
 -mph 1 vs.&nbsp;mph 2: analysis settings (see mvBIMBMAM manual for more details and our note below; for this example we will run mph 2)<br>
 -r: random seed for reproducibility of results**</p>
 <p>**Random seed: The mvBIMBAM article states: “We maximized the likelihood using an EM algorithm; four independent runs of the algorithm from different starting points produced essentially identical results.” This appears to be implemented in a random way, and so depends on the random number seed. For the purposes of this tutorial, we set a seed number so that the results would be identical each time. In practice, this step is not necessary, so the “-r 5254” section can be deleted from the code below.</p>

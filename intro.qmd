@@ -8,7 +8,7 @@ This tutorial will focus on the application of two multivariate Bayesian softwar
 
 Scutari M, Howell P, Balding DJ, Mackay I. Multiple Quantitative Trait Analysis Using Bayesian Networks. Genetics. 2014 Apr 11;198(1):129--137. PMID: 25236454 PMCID: PMC4174925 DOI: https://doi.org/10.1534/genetics.114.165704
 
-Zhang JZ*, Heinsberg LW*, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232. \*First authors.
+Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232.
 
 [www.bnlearn.com](https://www.bnlearn.com/)
 
@@ -20,9 +20,11 @@ Shim H, Chasman DI, Smith JD, Mora S, Ridker PM, Nickerson DA, Krauss RM, Stephe
 
 Stephens M. A unified framework for association analysis with multiple related phenotypes. PLoS One. 2013 Jul 5;8(7):e65245. doi: https://doi.org/10.1371/journal.pone.0065245. Erratum in: PLoS One. 2019 Mar 19;14(3):e0213951. PMID: 23861737; PMCID: PMC3702528.
 
+Zhang JZ, Heinsberg LW, Krishnan M, Hawley NL, Major TJ, Carlson JC, Harré Hindmarsh J, Watson H, Qasim M, Stamp LK, Dalbeth N, Murphy R, Sun G, Cheng H, Naseri T, Reupena MS, Kershaw EE, Deka R, McGarvey ST, Minster RL, Merriman TR, Weeks DE. Multivariate analysis of a missense variant in CREBRF reveals associations with measures of adiposity in people of Polynesian ancestries. Genet Epidemiol. 2023 Feb;47(1):105-118. doi: 10.1002/gepi.22508. Epub 2022 Nov 9. PMID: 36352773; PMCID: PMC9892232.
+
 Additional details about the method and its interpretation can be found in the [mvBIMBAM chapter](./mvbimbam.qmd) of this book or in `02_mvNUR_mvBIMBAM.Rmd` in the [GitHub repository](https://github.com/lwheinsberg/mvNUR).
 
-Note that while `bnlearn` is run directly in R, `mvBIMBAM` is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix.
+Note that while `bnlearn` is run directly in R, `mvBIMBAM` is a terminal-based program with no point/click desktop app. As such, please note that this example code, particularly the mvBIMBAM approach, requires at least an introductory understanding of R and Unix (terminal-based computer navigation).
 
 Finally, note that, throughout all markdowns, we have flagged lines that will need to be modified by the user if adapting this code for your own data using `###CUSTOMIZE**` annotation.
 
