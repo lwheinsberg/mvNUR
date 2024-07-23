@@ -1,5 +1,5 @@
 ---
-title: A Guide to Multivariate Bayesian Analyses in Nursing Research 
+title: Multivariate Bayesian Analyses for Nursing Research 
 output: 
   github_document:
     number_sections: true

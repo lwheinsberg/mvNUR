@@ -1,4 +1,4 @@
-A Guide to Multivariate Bayesian Analyses in Nursing Research
+Multivariate Bayesian Analyses for Nursing Research
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
