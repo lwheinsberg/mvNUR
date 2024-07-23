@@ -214,12 +214,10 @@ and how we modified the makefile to correct this issue, please see
 
 #### 3.2.1.2 Troubleshooting
 
-Note that you need to have GSL (GNU Scientific Library) installed on
-your machine before you can install mvBIMBAM. GSL is an open-source
-software library that provides a wide range of mathematical and
-statistical functions for scientific and numerical computing. Please see
-[`Troubleshooting.md`](Troubleshooting.md) for tips on getting GSL
-installed on your machine.
+Note that you need to have command line tools and GSL (GNU Scientific
+Library) installed on your machine before you can install mvBIMBAM.
+Please see [`Troubleshooting.md`](Troubleshooting.md) for tips on
+getting GSL installed on your machine.
 
 # 4 Synthetic data set overview
 
