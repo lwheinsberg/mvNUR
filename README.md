@@ -10,9 +10,6 @@ Copyright 2023, University of Pittsburgh. All Rights Reserved. License:
 
 # 2 Overview
 
-*I have a Bayesian inference joke but the first three people I told it
-to didn’t laugh and now I’m not so sure it’s funny.* - @JSEllenberg
-
 This repository was created to support a presentation at the
 International Society of Nurses in Genetics:
 
@@ -355,3 +352,6 @@ contributions to this repository:
   inspiration, I would never have ventured into the world of Bayesian
   statistics, or pursued many other endeavors I once thought were beyond
   my capabilities.
+
+*I have a Bayesian inference joke but the first three people I told it
+to didn’t laugh and now I’m not so sure it’s funny.* - @JSEllenberg

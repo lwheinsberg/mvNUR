@@ -22,8 +22,6 @@ Copyright 2023, University of Pittsburgh. All Rights Reserved. License: [GPL-2](
 
 # Overview
 
-*I have a Bayesian inference joke but the first three people I told it to didn't laugh and now I'm not so sure it's funny.* - @JSEllenberg
-
 This repository was created to support a presentation at the International Society of Nurses in Genetics:
 
 Heinsberg LW. Multivariate Bayesian Approaches for Analyzing Correlated Phenotypes in Nursing Research. (Expert Lecturer Abstract, Podium). Presented at the International Society of Nurses in Genetics, November 2023, Providence, Rhode Island.
@@ -227,3 +225,5 @@ I'd like to express my gratitude to the following for their support and contribu
 -   Support from the National Institutes of Health under award number K99HD107030 made this project possible, and for that, I'm truly grateful.
 -   Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being "test users" and providing their invaluable feedback on this guide.
 -   My deepest gratitude to Dr. Daniel Weeks. Without his guidance and inspiration, I would never have ventured into the world of Bayesian statistics, or pursued many other endeavors I once thought were beyond my capabilities.
+
+*I have a Bayesian inference joke but the first three people I told it to didn't laugh and now I'm not so sure it's funny.* - @JSEllenberg
