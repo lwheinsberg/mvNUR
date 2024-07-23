@@ -305,73 +305,73 @@ results <- run_plot_graph(data = df, k_crossval = 5, k_iterations = 5, alpha = 0
 
     ## * overall cross-validated correlations:
     ##   > PREDCOR( EMO_tscore ): 0.3450264 
-    ##   > POSTCOR( EMO_tscore ): 0.3418341 
+    ##   > POSTCOR( EMO_tscore ): 0.3430302 
     ##   > PREDCOR( bdito ): 0.5794972 
-    ##   > POSTCOR( bdito ): 0.1564295 
+    ##   > POSTCOR( bdito ): 0.1562939 
     ##   > PREDCOR( FAT_tscore ): 0.7323366 
-    ##   > POSTCOR( FAT_tscore ): 0.4701054 
+    ##   > POSTCOR( FAT_tscore ): 0.474831 
     ##   > PREDCOR( paohcif ): 0.6703178 
-    ##   > POSTCOR( paohcif ): 0.3077809 
+    ##   > POSTCOR( paohcif ): 0.3142044 
     ##   > PREDCOR( EPSscore ): 0.4307685 
-    ##   > POSTCOR( EPSscore ): 0.2783773 
+    ##   > POSTCOR( EPSscore ): 0.2801837 
     ##   > PREDCOR( pain ): 0.5086095 
-    ##   > POSTCOR( pain ): 0.3444792 
+    ##   > POSTCOR( pain ): 0.3479232 
     ## * overall cross-validated correlations:
     ##   > PREDCOR( EMO_tscore ): 0.3668206 
-    ##   > POSTCOR( EMO_tscore ): 0.3637307 
+    ##   > POSTCOR( EMO_tscore ): 0.3638267 
     ##   > PREDCOR( bdito ): 0.5824107 
-    ##   > POSTCOR( bdito ): 0.1742357 
+    ##   > POSTCOR( bdito ): 0.1731656 
     ##   > PREDCOR( FAT_tscore ): 0.7340804 
-    ##   > POSTCOR( FAT_tscore ): 0.4730514 
+    ##   > POSTCOR( FAT_tscore ): 0.4742544 
     ##   > PREDCOR( paohcif ): 0.6728188 
-    ##   > POSTCOR( paohcif ): 0.3142044 
+    ##   > POSTCOR( paohcif ): 0.3160669 
     ##   > PREDCOR( EPSscore ): 0.4332637 
-    ##   > POSTCOR( EPSscore ): 0.2818876 
+    ##   > POSTCOR( EPSscore ): 0.2920411 
     ##   > PREDCOR( pain ): 0.516585 
-    ##   > POSTCOR( pain ): 0.3397383 
+    ##   > POSTCOR( pain ): 0.3489549 
     ## * overall cross-validated correlations:
     ##   > PREDCOR( EMO_tscore ): 0.3362601 
-    ##   > POSTCOR( EMO_tscore ): 0.3351085 
+    ##   > POSTCOR( EMO_tscore ): 0.3338039 
     ##   > PREDCOR( bdito ): 0.6035443 
-    ##   > POSTCOR( bdito ): 0.1941734 
+    ##   > POSTCOR( bdito ): 0.1840267 
     ##   > PREDCOR( FAT_tscore ): 0.7327031 
-    ##   > POSTCOR( FAT_tscore ): 0.4663249 
+    ##   > POSTCOR( FAT_tscore ): 0.4651933 
     ##   > PREDCOR( paohcif ): 0.6564999 
-    ##   > POSTCOR( paohcif ): 0.3083567 
+    ##   > POSTCOR( paohcif ): 0.3126157 
     ##   > PREDCOR( EPSscore ): 0.4288491 
-    ##   > POSTCOR( EPSscore ): 0.2874386 
+    ##   > POSTCOR( EPSscore ): 0.2887142 
     ##   > PREDCOR( pain ): 0.5386219 
-    ##   > POSTCOR( pain ): 0.3476662 
+    ##   > POSTCOR( pain ): 0.3468078 
     ## * overall cross-validated correlations:
     ##   > PREDCOR( EMO_tscore ): 0.3339423 
-    ##   > POSTCOR( EMO_tscore ): 0.3250112 
+    ##   > POSTCOR( EMO_tscore ): 0.3357798 
     ##   > PREDCOR( bdito ): 0.5858688 
-    ##   > POSTCOR( bdito ): 0.1595806 
+    ##   > POSTCOR( bdito ): 0.1616335 
     ##   > PREDCOR( FAT_tscore ): 0.7323323 
-    ##   > POSTCOR( FAT_tscore ): 0.471374 
+    ##   > POSTCOR( FAT_tscore ): 0.4706502 
     ##   > PREDCOR( paohcif ): 0.674619 
-    ##   > POSTCOR( paohcif ): 0.3208565 
+    ##   > POSTCOR( paohcif ): 0.3214869 
     ##   > PREDCOR( EPSscore ): 0.4576816 
-    ##   > POSTCOR( EPSscore ): 0.294876 
+    ##   > POSTCOR( EPSscore ): 0.2964758 
     ##   > PREDCOR( pain ): 0.5089625 
-    ##   > POSTCOR( pain ): 0.3600803 
+    ##   > POSTCOR( pain ): 0.354762 
     ## * overall cross-validated correlations:
     ##   > PREDCOR( EMO_tscore ): 0.3341934 
-    ##   > POSTCOR( EMO_tscore ): 0.3350945 
+    ##   > POSTCOR( EMO_tscore ): 0.3341238 
     ##   > PREDCOR( bdito ): 0.590734 
-    ##   > POSTCOR( bdito ): 0.1301288 
+    ##   > POSTCOR( bdito ): 0.1294128 
     ##   > PREDCOR( FAT_tscore ): 0.7350113 
-    ##   > POSTCOR( FAT_tscore ): 0.4736703 
+    ##   > POSTCOR( FAT_tscore ): 0.4736643 
     ##   > PREDCOR( paohcif ): 0.670765 
-    ##   > POSTCOR( paohcif ): 0.317689 
+    ##   > POSTCOR( paohcif ): 0.3157029 
     ##   > PREDCOR( EPSscore ): 0.4389516 
-    ##   > POSTCOR( EPSscore ): 0.2791155 
+    ##   > POSTCOR( EPSscore ): 0.2816425 
     ##   > PREDCOR( pain ): 0.5230457 
-    ##   > POSTCOR( pain ): 0.3444847 
+    ##   > POSTCOR( pain ): 0.3388155 
     ## EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
     ##  0.3432486  0.5884110  0.7332928  0.6690041  0.4379029  0.5191649 
     ## EMO_tscore      bdito FAT_tscore    paohcif   EPSscore       pain 
-    ##  0.3401558  0.1629096  0.4709052  0.3137775  0.2843390  0.3472897 
+    ##  0.3421129  0.1609065  0.4717186  0.3160153  0.2878114  0.3474527 
     ## threshold:  0.6 
     ## min strength > threshold:  0.76 
     ## strength:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0.04 0.08 0.08 0.08 0.08 0.12 0.12 0.12 0.12 0.12 0.12 0.16 0.16 0.2 0.2 0.32 0.32 0.36 0.36 0.4 0.4 0.6 0.6 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.76 0.8 0.8 0.84 0.84 0.88 0.88 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1

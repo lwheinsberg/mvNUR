@@ -110,6 +110,9 @@ df_vertex_table <- data.frame(
   type = types,
   stringsAsFactors = FALSE
 )
+
+# Replace vertex.names with the corresponding custom labels
+df_vertex_table$vertex.names <- custom_labels2[match(df_vertex_table$vertex.names, names(custom_labels2))]
 ```
 
 Check that all variables are numeric or integer.
