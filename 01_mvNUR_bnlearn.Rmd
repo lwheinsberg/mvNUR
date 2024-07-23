@@ -2,13 +2,13 @@
 title: "mvNUR Workflow 1: bnlearn"
 author: "Lacey W. Heinsberg"
 output:
-  github_document:
-  html_preview: false
-  toc: true
   pdf_document:
     toc: yes
     number_sections: true
     toc_depth: '5'
+  html_preview: false
+  toc: true
+  github_document:
   html_document:
     df_print: paged
     toc: yes

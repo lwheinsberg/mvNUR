@@ -2,7 +2,10 @@
 title: "mvNUR Workflow 2: mvBIMBAM"
 author: "Lacey W. Heinsberg"
 output:
-  github_document:
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
+    number_sections: true
   html_preview: false
   toc: true
   html_document:
@@ -10,10 +13,7 @@ output:
     toc: yes
     toc_depth: '5'
     code_folding: show
-  pdf_document:
-    toc: yes
-    toc_depth: '5'
-    number_sections: true
+  github_document:
 header-includes: 
   - \renewcommand{\and}{\\}
 ---

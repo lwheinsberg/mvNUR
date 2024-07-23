@@ -5,15 +5,15 @@ output:
   github_document:
   html_preview: false
   toc: true
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
+    number_sections: true
   html_document:
     df_print: paged
     toc: yes
     toc_depth: '5'
     code_folding: show
-  pdf_document:
-    toc: yes
-    toc_depth: '5'
-    number_sections: true
 header-includes: 
   - \renewcommand{\and}{\\}
 ---
