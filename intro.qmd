@@ -32,7 +32,9 @@ Finally, note that, throughout all markdowns, we have flagged lines that will ne
 
 ### bnlearn
 
-You can install bnlearn from [CRAN](https://cran.r-project.org/web/packages/bnlearn/index.html) using:
+**bnlearn** is available on [CRAN](https://cran.r-project.org/) and can be downloaded from its web page in the Packages section ([here](https://cran.r-project.org/web/packages/bnlearn/index.html)).
+
+For example, you can install bnlearn from [CRAN](https://cran.r-project.org/web/packages/bnlearn/index.html) using:
 
 ```         
 install.packages("bnlearn")
@@ -44,7 +46,32 @@ or
 install.packages("https://www.bnlearn.com/releases/bnlearn_latest.tar.gz", repos = NULL, type = "source")
 ```
 
-Check your R version if you are having any issues installing. As of October 2023, bnlearn requires R version 4.2.0 or higher.
+Development snapshots, which include bugfixes that will be incorporated in the CRAN release as well as new features, can be downloaded from the links above or installed with a simple:
+
+```         
+install.packages("http://www.bnlearn.com/releases/bnlearn_latest.tar.gz")
+```
+
+The only suggested packages not hosted on [CRAN](https://cran.r-project.org/) are **graph** and **Rgraphviz**, which can be installed from [BioConductor](https://www.bioconductor.org/):
+
+```         
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install()
+BiocManager::install(c("graph", "Rgraphviz"))
+```
+
+following the instructions present on [this](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html) and [this](https://www.bioconductor.org/packages/release/bioc/html/graph.html) webpages. Please also note that the **gRain** package, while on CRAN, depends on packages that are on Bioconductor both directly and through the **gRbase** package, which depends on **RBGL**:
+
+```         
+BiocManager::install()
+BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
+install.packages("gRain")
+```
+
+Check your R version if you are having any issues installing. As of August 2024, bnlearn requires R version 4.4.0 or higher.
+
+Additional installation and troubleshooting information can be found at the bnlearn [website]( https://cran.r-project.org/web/packages/bnlearn/index.html). 
 
 ### mvBIMBAM
 

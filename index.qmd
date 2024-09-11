@@ -58,9 +58,9 @@ which has been adapted for (hopeful) publication as a manuscript entitled:
 
 I'd also like to express my gratitude to the following for their support and contributions to this repository:
 
--   Support from the National Institutes of Health under award numbers K99HD107030 and K99HD107030 made this project possible, and for that, I'm truly grateful.
+-   Support from the National Institutes of Health under award numbers K99HD107030 and R00HD107030 made this project possible, and for that, I'm truly grateful.
 
--   Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being "test users" and providing their feedback on this guide.
+-   Special thanks to Dr. Tara Davis, Mr. Dylan Maher, and Dr. Daniel Weeks for being "test users" and for providing their feedback on this guide.
 
 -   My deepest gratitude to Dr. Daniel Weeks. Without his guidance and inspiration, I would never have ventured into the world of Bayesian statistics, or pursued many other endeavors I once thought were beyond my capabilities.
 
