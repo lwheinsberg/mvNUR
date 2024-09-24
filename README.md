@@ -22,8 +22,8 @@ which has been adapted for (hopeful) publication as a manuscript
 entitled:
 
 Heinsberg LW, Davis TS, Maher D, Bender CM, Conley YP, Weeks DE.
-Tutorial: Multivariate Bayesian Analyses in Nursing Research. Submitted
-to Biological Research for Nurses.
+Multivariate Bayesian Analyses in Nursing Research: An Introductory
+Guide. Submitted to Biological Research for Nurses.
 
 The goal of this repository is to provide detailed code and a fully
 synthetic example data set to guide nurse scientists and other
@@ -92,7 +92,11 @@ document.
 
 ## 3.1 bnlearn
 
-You can install bnlearn from
+**bnlearn** is available on [CRAN](https://cran.r-project.org/) and can
+be downloaded from its web page in the Packages section
+([here](https://cran.r-project.org/web/packages/bnlearn/index.html)).
+
+For example, you can install bnlearn from
 [CRAN](https://cran.r-project.org/web/packages/bnlearn/index.html)
 using:
 
@@ -102,8 +106,40 @@ or
 
     install.packages("https://www.bnlearn.com/releases/bnlearn_latest.tar.gz", repos = NULL, type = "source")
 
+Development snapshots, which include bugfixes that will be incorporated
+in the CRAN release as well as new features, can be downloaded from the
+links above or installed with a simple:
+
+    install.packages("http://www.bnlearn.com/releases/bnlearn_latest.tar.gz")
+
+The only suggested packages not hosted on
+[CRAN](https://cran.r-project.org/) are **graph** and **Rgraphviz**,
+which can be installed from
+[BioConductor](https://www.bioconductor.org/):
+
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+      install.packages("BiocManager")
+    BiocManager::install()
+    BiocManager::install(c("graph", "Rgraphviz"))
+
+following the instructions present on
+[this](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html)
+and
+[this](https://www.bioconductor.org/packages/release/bioc/html/graph.html)
+webpage. Please also note that the **gRain** package, while on CRAN,
+depends on packages that are on Bioconductor both directly and through
+the **gRbase** package, which depends on **RBGL**:
+
+    BiocManager::install()
+    BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
+    install.packages("gRain")
+
 Check your R version if you are having any issues installing. As of
-October 2023, bnlearn requires R version 4.2.0 or higher.
+August 2024, bnlearn requires R version 4.4.0 or higher.
+
+Additional installation and troubleshooting information can be found at
+the bnlearn
+[website](https://cran.r-project.org/web/packages/bnlearn/index.html).
 
 ## 3.2 mvBIMBAM
 
@@ -343,11 +379,12 @@ Lacey W. Heinsberg, PhD, RN: <law145@pitt.edu>
 I’d like to express my gratitude to the following for their support and
 contributions to this repository:
 
-- Support from the National Institutes of Health under award number
-  K99HD107030 made this project possible, and for that, I’m truly
-  grateful.
-- Special thanks to Dr. Tara Davis and Mr. Dylan Maher for being “test
-  users” and providing their invaluable feedback on this guide.
+- Support from the National Institutes of Health under award numbers
+  K99HD107030 and R00HD107030 made this project possible, and for that,
+  I’m truly grateful.
+- Special thanks to Dr. Tara Davis, Mr. Dylan Maher, and Dr. Daniel
+  Weeks for being “test users” and providing their invaluable feedback
+  on this guide.
 - My deepest gratitude to Dr. Daniel Weeks. Without his guidance and
   inspiration, I would never have ventured into the world of Bayesian
   statistics, or pursued many other endeavors I once thought were beyond
