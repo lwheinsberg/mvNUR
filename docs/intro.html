@@ -257,11 +257,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.2" class="anchored" data-anchor-id="installation"><span class="header-section-number">1.2</span> Installation</h2>
 <section id="bnlearn" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="bnlearn"><span class="header-section-number">1.2.1</span> bnlearn</h3>
-<p>You can install bnlearn from <a href="https://cran.r-project.org/web/packages/bnlearn/index.html">CRAN</a> using:</p>
+<p><strong>bnlearn</strong> is available on <a href="https://cran.r-project.org/">CRAN</a> and can be downloaded from its web page in the Packages section (<a href="https://cran.r-project.org/web/packages/bnlearn/index.html">here</a>).</p>
+<p>For example, you can install bnlearn from <a href="https://cran.r-project.org/web/packages/bnlearn/index.html">CRAN</a> using:</p>
 <pre><code>install.packages("bnlearn")</code></pre>
 <p>or</p>
 <pre><code>install.packages("https://www.bnlearn.com/releases/bnlearn_latest.tar.gz", repos = NULL, type = "source")</code></pre>
-<p>Check your R version if you are having any issues installing. As of October 2023, bnlearn requires R version 4.2.0 or higher.</p>
+<p>Development snapshots, which include bugfixes that will be incorporated in the CRAN release as well as new features, can be downloaded from the links above or installed with a simple:</p>
+<pre><code>install.packages("http://www.bnlearn.com/releases/bnlearn_latest.tar.gz")</code></pre>
+<p>The only suggested packages not hosted on <a href="https://cran.r-project.org/">CRAN</a> are <strong>graph</strong> and <strong>Rgraphviz</strong>, which can be installed from <a href="https://www.bioconductor.org/">BioConductor</a>:</p>
+<pre><code>if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install()
+BiocManager::install(c("graph", "Rgraphviz"))</code></pre>
+<p>following the instructions present on <a href="https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html">this</a> and <a href="https://www.bioconductor.org/packages/release/bioc/html/graph.html">this</a> webpage. Please also note that the <strong>gRain</strong> package, while on CRAN, depends on packages that are on Bioconductor both directly and through the <strong>gRbase</strong> package, which depends on <strong>RBGL</strong>:</p>
+<pre><code>BiocManager::install()
+BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
+install.packages("gRain")</code></pre>
+<p>Check your R version if you are having any issues installing. As of August 2024, bnlearn requires R version 4.4.0 or higher.</p>
+<p>Additional installation and troubleshooting information can be found at the bnlearn <a href="https://cran.r-project.org/web/packages/bnlearn/index.html">website</a>.</p>
 </section>
 <section id="mvbimbam" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="mvbimbam"><span class="header-section-number">1.2.2</span> mvBIMBAM</h3>
@@ -332,9 +345,9 @@ make all</code></pre>
 <p>SNPs/Predictors<br>
 -rs #s (SNPs)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in a mapping of variable name to informative label</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/BrCa_synthetic_SimpleDict.csv"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(dict, <span class="st">"Data dictionary"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in a mapping of variable name to informative label</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/BrCa_synthetic_SimpleDict.csv"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(dict, <span class="st">"Data dictionary"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Data dictionary (continued below)</caption>

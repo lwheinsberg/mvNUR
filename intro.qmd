@@ -61,7 +61,7 @@ BiocManager::install()
 BiocManager::install(c("graph", "Rgraphviz"))
 ```
 
-following the instructions present on [this](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html) and [this](https://www.bioconductor.org/packages/release/bioc/html/graph.html) webpages. Please also note that the **gRain** package, while on CRAN, depends on packages that are on Bioconductor both directly and through the **gRbase** package, which depends on **RBGL**:
+following the instructions present on [this](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html) and [this](https://www.bioconductor.org/packages/release/bioc/html/graph.html) webpage. Please also note that the **gRain** package, while on CRAN, depends on packages that are on Bioconductor both directly and through the **gRbase** package, which depends on **RBGL**:
 
 ```         
 BiocManager::install()
@@ -71,7 +71,7 @@ install.packages("gRain")
 
 Check your R version if you are having any issues installing. As of August 2024, bnlearn requires R version 4.4.0 or higher.
 
-Additional installation and troubleshooting information can be found at the bnlearn [website]( https://cran.r-project.org/web/packages/bnlearn/index.html). 
+Additional installation and troubleshooting information can be found at the bnlearn [website](https://cran.r-project.org/web/packages/bnlearn/index.html).
 
 ### mvBIMBAM
 
